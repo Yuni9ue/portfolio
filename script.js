@@ -96,10 +96,12 @@ function loadProject1(project) {
     document.getElementById('achievement2-item2-subtitle').textContent = project.achievements[1].items[1].subtitle;
     document.getElementById('achievement2-item2-content').textContent = project.achievements[1].items[1].content;
 
-    setupImageToggle('toggle-rdbms-img', 'rdbms-img-container');
+    setupImageToggle('toggle-cassandra-img', 'cassandra-img-container', '클러스터 구성 보기', '클러스터 구성 숨기기');
+    setupImageToggle('toggle-mongodb-img', 'mongodb-img-container', '스키마 비교 보기', '스키마 비교 숨기기');
+    setupImageToggle('toggle-rdbms-img', 'rdbms-img-container', '비교 그래프 보기', '비교 그래프 숨기기');
 }
 
-function setupImageToggle(buttonId, containerId) {
+function setupImageToggle(buttonId, containerId, showText, hideText) {
     const button = document.getElementById(buttonId);
     const container = document.getElementById(containerId);
     
@@ -107,9 +109,9 @@ function setupImageToggle(buttonId, containerId) {
         button.addEventListener('click', () => {
             container.classList.toggle('hidden');
             if (container.classList.contains('hidden')) {
-                button.textContent = '📊 비교 그래프 보기';
+                button.textContent = showText;
             } else {
-                button.textContent = '📊 비교 그래프 숨기기';
+                button.textContent = hideText;
             }
         });
     }
