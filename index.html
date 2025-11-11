@@ -50,10 +50,21 @@
                             <li><strong>과정:</strong> 
                                 <ul class="list-disc list-inside ml-4 mt-1" id="activity2-process"></ul>
                             </li>
+                            <li><strong>성능 비교:</strong> <span id="activity2-performance"></span></li>
+                            <li><strong>결과:</strong> <span id="activity2-result"></span></li>
                         </ul>
                         <button id="toggle-cassandra-img" class="toggle-btn mt-3">그래프 보기</button>
                         <div id="cassandra-img-container" class="image-container hidden">
-                            <img src="images/p1_images/c.png" alt="Cassandra 클러스터 구성" class="project-image">
+                            <div class="image-grid">
+                                <div class="image-item">
+                                    <h6 class="image-title">Single-Node VS Multi-Node</h6>
+                                    <img src="images/p1_images/c.png" alt="Single-Node VS Multi-Node" class="project-image">
+                                </div>
+                                <div class="image-item">
+                                    <h6 class="image-title">Multi-Node구조</h6>
+                                    <img src="images/p1_images/c.s.png" alt="Multi-Node구조" class="project-image">
+                                </div>
+                            </div>
                         </div>
                     </li>
                     <li>
@@ -61,8 +72,8 @@
                         <ul class="mt-2">
                             <li><strong>문제:</strong> <span id="activity3-problem"></span></li>
                             <li><strong>가설:</strong> <span id="activity3-hypothesis"></span></li>
-                            <li><strong>시도:</strong> <span id="activity3-attempt"></span></li>
-                            <li><strong>결론:</strong> <span id="activity3-conclusion"></span></li>
+                            <li><strong>해결:</strong> <span id="activity3-attempt"></span></li>
+                            <li><strong>결과:</strong> <span id="activity3-conclusion"></span></li>
                         </ul>
                         <button id="toggle-mongodb-img" class="toggle-btn mt-3">그래프 보기</button>
                         <div id="mongodb-img-container" class="image-container hidden">
@@ -82,7 +93,7 @@
                         <strong id="activity4-title"></strong>
                         <ul class="mt-2">
                             <li><strong>문제:</strong> <span id="activity4-problem"></span></li>
-                            <li><strong>재시도:</strong> <span id="activity4-retry"></span></li>
+                            <li><strong>해결:</strong> <span id="activity4-retry"></span></li>
                             <li><strong>결과:</strong> <span id="activity4-result"></span></li>
                             <li><strong>결론:</strong> <span id="activity4-conclusion"></span></li>
                         </ul>
@@ -93,7 +104,7 @@
                     </li>
                 </ol>
 
-                <h4>프로젝트 핵심 성과</h4>
+                <h4>프로젝트 핵심 요약</h4>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4 my-6">
                     <div class="stat-card">
                         <div class="stat-value" id="stat1-value"></div>

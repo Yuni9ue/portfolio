@@ -69,6 +69,8 @@ function loadProject1(project) {
     processContainer.innerHTML = project.activities[1].process.map(item => 
         `<li>${item}</li>`
     ).join('');
+    document.getElementById('activity2-performance').textContent = project.activities[1].performance;
+    document.getElementById('activity2-result').textContent = project.activities[1].result;
 
     document.getElementById('activity3-title').textContent = project.activities[2].title;
     document.getElementById('activity3-problem').textContent = project.activities[2].problem;
