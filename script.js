@@ -95,6 +95,24 @@ function loadProject1(project) {
     document.getElementById('achievement2-item1-content').textContent = project.achievements[1].items[0].content;
     document.getElementById('achievement2-item2-subtitle').textContent = project.achievements[1].items[1].subtitle;
     document.getElementById('achievement2-item2-content').textContent = project.achievements[1].items[1].content;
+
+    setupImageToggle('toggle-rdbms-img', 'rdbms-img-container');
+}
+
+function setupImageToggle(buttonId, containerId) {
+    const button = document.getElementById(buttonId);
+    const container = document.getElementById(containerId);
+    
+    if (button && container) {
+        button.addEventListener('click', () => {
+            container.classList.toggle('hidden');
+            if (container.classList.contains('hidden')) {
+                button.textContent = '📊 비교 그래프 보기';
+            } else {
+                button.textContent = '📊 비교 그래프 숨기기';
+            }
+        });
+    }
 }
 
 function loadProject2(project) {
