@@ -92,10 +92,12 @@ function loadProject1(project) {
     document.getElementById('achievement1-title').textContent = project.achievements[0].title;
     document.getElementById('achievement1-content').textContent = project.achievements[0].content;
     document.getElementById('achievement2-title').textContent = project.achievements[1].title;
-    document.getElementById('achievement2-item1-subtitle').textContent = project.achievements[1].items[0].subtitle;
-    document.getElementById('achievement2-item1-content').textContent = project.achievements[1].items[0].content;
-    document.getElementById('achievement2-item2-subtitle').textContent = project.achievements[1].items[1].subtitle;
-    document.getElementById('achievement2-item2-content').textContent = project.achievements[1].items[1].content;
+    document.getElementById('achievement2-content').textContent = project.achievements[1].content;
+    document.getElementById('achievement3-title').textContent = project.achievements[2].title;
+    document.getElementById('achievement3-item1-subtitle').textContent = project.achievements[2].items[0].subtitle;
+    document.getElementById('achievement3-item1-content').textContent = project.achievements[2].items[0].content;
+    document.getElementById('achievement3-item2-subtitle').textContent = project.achievements[2].items[1].subtitle;
+    document.getElementById('achievement3-item2-content').textContent = project.achievements[2].items[1].content;
 
 }
 
@@ -157,7 +159,9 @@ function loadProject2(project) {
     document.getElementById('mobility2-case').textContent = project.parts[2].mobilityItems[1].case;
     document.getElementById('mobility2-content').textContent = project.parts[2].mobilityItems[1].content;
 
-    document.getElementById('project2-problem').textContent = project.problemSolving.problem;
-    document.getElementById('project2-solution').textContent = project.problemSolving.solution;
-    document.getElementById('project2-achievement').textContent = project.problemSolving.achievement;
+    const implementationsContainer = document.getElementById('project2-implementations');
+    implementationsContainer.innerHTML = project.summary.implementations.map(item => 
+        `<li>${item}</li>`
+    ).join('');
+    document.getElementById('project2-achievement').textContent = project.summary.achievement;
 }
