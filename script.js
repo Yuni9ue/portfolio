@@ -42,6 +42,8 @@ function loadProject(projectId) {
     const project = projectsData.find(p => p.id === projectId);
     if (!project) return;
 
+    resetAllImageToggles();
+
     if (projectId === 1) {
         loadProject1(project);
     } else if (projectId === 2) {
@@ -108,6 +110,27 @@ function setupAllImageToggles() {
     setupImageToggle('toggle-rdbms-img', 'rdbms-img-container', '그래프 보기', '그래프 숨기기');
     setupImageToggle('toggle-part1-img', 'part1-img-container', '구현 사진 보기', '구현 사진 숨기기');
     setupImageToggle('toggle-part2-img', 'part2-img-container', '구현 사진 보기', '구현 사진 숨기기');
+}
+
+function resetAllImageToggles() {
+    const toggleConfigs = [
+        { buttonId: 'toggle-cassandra-img', containerId: 'cassandra-img-container', showText: '그래프 보기' },
+        { buttonId: 'toggle-mongodb-img', containerId: 'mongodb-img-container', showText: '스키마 비교 보기' },
+        { buttonId: 'toggle-mysql-img', containerId: 'mysql-img-container', showText: '그래프 보기' },
+        { buttonId: 'toggle-rdbms-img', containerId: 'rdbms-img-container', showText: '그래프 보기' },
+        { buttonId: 'toggle-part1-img', containerId: 'part1-img-container', showText: '구현 사진 보기' },
+        { buttonId: 'toggle-part2-img', containerId: 'part2-img-container', showText: '구현 사진 보기' }
+    ];
+
+    toggleConfigs.forEach(config => {
+        const button = document.getElementById(config.buttonId);
+        const container = document.getElementById(config.containerId);
+        
+        if (button && container) {
+            container.classList.add('hidden');
+            button.textContent = config.showText;
+        }
+    });
 }
 
 function setupImageToggle(buttonId, containerId, showText, hideText) {
