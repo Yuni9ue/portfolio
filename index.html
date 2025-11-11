@@ -20,7 +20,6 @@
         <nav class="flex flex-col sm:flex-row justify-center space-y-3 sm:space-y-0 sm:space-x-4 mb-8">
             <button id="tab-btn-1" data-tab="1" class="nav-tab active-tab">1.DB 구축 및 성능 평가</button>
             <button id="tab-btn-2" data-tab="2" class="nav-tab">2. 네트워크 프로그래밍</button>
-            <button id="tab-btn-3" data-tab="3" class="nav-tab">3. Prolog 에이전트</button>
         </nav>
 
         <main>
@@ -87,6 +86,10 @@
                             <li><strong>결과:</strong> <span id="activity4-result"></span></li>
                             <li><strong>결론:</strong> <span id="activity4-conclusion"></span></li>
                         </ul>
+                        <button id="toggle-mysql-img" class="toggle-btn mt-3">성능 비교 보기</button>
+                        <div id="mysql-img-container" class="image-container hidden">
+                            <img src="images/p1_images/bf.png" alt="MySQL 버퍼풀 성능 비교" class="project-image">
+                        </div>
                     </li>
                 </ol>
 
@@ -170,55 +173,6 @@
                     <li><strong>[해결]</strong>: <span id="project2-solution"></span></li>
                     <li><strong>[성과]</strong>: <span id="project2-achievement"></span></li>
                 </ul>
-            </section>
-
-            <section id="content-3" class="project-content hidden">
-                <h2 id="project3-title"></h2>
-                <h3 id="project3-subtitle"></h3>
-                
-                <p class="text-sm text-slate-500 mb-4">
-                    <span class="font-medium">프로젝트 기간:</span> <span id="project3-period"></span>
-                </p>
-
-                <h4>사용 기술</h4>
-                <div id="project3-techstack"></div>
-
-                <h4>주요 구현 내용</h4>
-                <ul>
-                    <li><strong id="impl1-title"></strong>: <span id="impl1-content"></span></li>
-                    <li><strong id="impl2-title"></strong>: <span id="impl2-content"></span></li>
-                    <li><strong id="impl3-title"></strong>: <span id="impl3-content"></span></li>
-                    <li><strong id="impl4-title"></strong>: <span id="impl4-content"></span></li>
-                </ul>
-
-                <h4>문제 해결 및 성과</h4>
-                <ul>
-                    <li><strong>[문제]</strong>: <span id="project3-problem"></span></li>
-                    <li><strong>[해결]</strong>: <span id="project3-solution"></span></li>
-                    <li><strong>[성과]</strong>: <span id="project3-achievement"></span></li>
-                </ul>
-
-                <h4>AI 시대와 Prolog에 대한 고찰</h4>
-                <div class="reflection-box">
-                    <h5 id="reflection1-title"></h5>
-                    <p class="mb-3" id="reflection1-content"></p>
-
-                    <h5 id="reflection2-title"></h5>
-                    <p class="mb-3" id="reflection2-intro"></p>
-                    <ul class="list-disc list-inside mb-3 space-y-2">
-                        <li><strong id="aitype1-type"></strong>: <span id="aitype1-desc"></span></li>
-                        <li><strong id="aitype2-type"></strong>: <span id="aitype2-desc"></span></li>
-                    </ul>
-                    <p class="mb-3" id="reflection2-combined"></p>
-                    
-                    <h5 id="reflection3-title"></h5>
-                    <ul class="list-disc list-inside space-y-2">
-                        <li><strong id="role1-title"></strong>: <span id="role1-desc"></span></li>
-                        <li><strong id="role2-title"></strong>: <span id="role2-desc"></span></li>
-                        <li><strong id="role3-title"></strong>: <span id="role3-desc"></span></li>
-                    </ul>
-                    <p class="mt-4 font-medium" id="reflection-conclusion"></p>
-                </div>
             </section>
         </main>
     </div>

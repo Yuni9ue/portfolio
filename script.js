@@ -4,6 +4,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     await loadProjects();
     loadProject(1);
     setupTabs();
+    setupAllImageToggles();
 });
 
 async function loadProjects() {
@@ -45,8 +46,6 @@ function loadProject(projectId) {
         loadProject1(project);
     } else if (projectId === 2) {
         loadProject2(project);
-    } else if (projectId === 3) {
-        loadProject3(project);
     }
 }
 
@@ -96,9 +95,13 @@ function loadProject1(project) {
     document.getElementById('achievement2-item2-subtitle').textContent = project.achievements[1].items[1].subtitle;
     document.getElementById('achievement2-item2-content').textContent = project.achievements[1].items[1].content;
 
-    setupImageToggle('toggle-cassandra-img', 'cassandra-img-container', '클러스터 구성 보기', '클러스터 구성 숨기기');
+}
+
+function setupAllImageToggles() {
+    setupImageToggle('toggle-cassandra-img', 'cassandra-img-container', '그래프 보기', '그래프 숨기기');
     setupImageToggle('toggle-mongodb-img', 'mongodb-img-container', '스키마 비교 보기', '스키마 비교 숨기기');
-    setupImageToggle('toggle-rdbms-img', 'rdbms-img-container', '비교 그래프 보기', '비교 그래프 숨기기');
+    setupImageToggle('toggle-mysql-img', 'mysql-img-container', '그래프 보기', '그래프 숨기기');
+    setupImageToggle('toggle-rdbms-img', 'rdbms-img-container', '그래프 보기', '그래프 숨기기');
 }
 
 function setupImageToggle(buttonId, containerId, showText, hideText) {
@@ -155,48 +158,4 @@ function loadProject2(project) {
     document.getElementById('project2-problem').textContent = project.problemSolving.problem;
     document.getElementById('project2-solution').textContent = project.problemSolving.solution;
     document.getElementById('project2-achievement').textContent = project.problemSolving.achievement;
-}
-
-function loadProject3(project) {
-    document.getElementById('project3-title').textContent = project.title;
-    document.getElementById('project3-subtitle').textContent = project.subtitle;
-    document.getElementById('project3-period').textContent = project.period;
-
-    const techstackContainer = document.getElementById('project3-techstack');
-    techstackContainer.innerHTML = project.techStack.map(tech => 
-        `<span class="tech-tag">${tech}</span>`
-    ).join('');
-
-    document.getElementById('impl1-title').textContent = project.implementations[0].title;
-    document.getElementById('impl1-content').textContent = project.implementations[0].content;
-    document.getElementById('impl2-title').textContent = project.implementations[1].title;
-    document.getElementById('impl2-content').textContent = project.implementations[1].content;
-    document.getElementById('impl3-title').textContent = project.implementations[2].title;
-    document.getElementById('impl3-content').textContent = project.implementations[2].content;
-    document.getElementById('impl4-title').textContent = project.implementations[3].title;
-    document.getElementById('impl4-content').textContent = project.implementations[3].content;
-
-    document.getElementById('project3-problem').textContent = project.problemSolving.problem;
-    document.getElementById('project3-solution').textContent = project.problemSolving.solution;
-    document.getElementById('project3-achievement').textContent = project.problemSolving.achievement;
-
-    document.getElementById('reflection1-title').textContent = project.reflection.feature.title;
-    document.getElementById('reflection1-content').textContent = project.reflection.feature.content;
-
-    document.getElementById('reflection2-title').textContent = project.reflection.aiRole.title;
-    document.getElementById('reflection2-intro').textContent = project.reflection.aiRole.intro;
-    document.getElementById('aitype1-type').textContent = project.reflection.aiRole.aiTypes[0].type;
-    document.getElementById('aitype1-desc').textContent = project.reflection.aiRole.aiTypes[0].desc;
-    document.getElementById('aitype2-type').textContent = project.reflection.aiRole.aiTypes[1].type;
-    document.getElementById('aitype2-desc').textContent = project.reflection.aiRole.aiTypes[1].desc;
-    document.getElementById('reflection2-combined').textContent = project.reflection.aiRole.combined;
-
-    document.getElementById('reflection3-title').textContent = project.reflection.potentialRoles.title;
-    document.getElementById('role1-title').textContent = project.reflection.potentialRoles.items[0].role;
-    document.getElementById('role1-desc').textContent = project.reflection.potentialRoles.items[0].desc;
-    document.getElementById('role2-title').textContent = project.reflection.potentialRoles.items[1].role;
-    document.getElementById('role2-desc').textContent = project.reflection.potentialRoles.items[1].desc;
-    document.getElementById('role3-title').textContent = project.reflection.potentialRoles.items[2].role;
-    document.getElementById('role3-desc').textContent = project.reflection.potentialRoles.items[2].desc;
-    document.getElementById('reflection-conclusion').textContent = project.reflection.potentialRoles.conclusion;
 }
