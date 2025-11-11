@@ -106,6 +106,8 @@ function setupAllImageToggles() {
     setupImageToggle('toggle-mongodb-img', 'mongodb-img-container', '스키마 비교 보기', '스키마 비교 숨기기');
     setupImageToggle('toggle-mysql-img', 'mysql-img-container', '그래프 보기', '그래프 숨기기');
     setupImageToggle('toggle-rdbms-img', 'rdbms-img-container', '그래프 보기', '그래프 숨기기');
+    setupImageToggle('toggle-part1-img', 'part1-img-container', '구현 사진 보기', '구현 사진 숨기기');
+    setupImageToggle('toggle-part2-img', 'part2-img-container', '구현 사진 보기', '구현 사진 숨기기');
 }
 
 function setupImageToggle(buttonId, containerId, showText, hideText) {

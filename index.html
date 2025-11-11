@@ -37,14 +37,14 @@
                 <h4>주요 활동 및 문제 해결 경험</h4>
                 <ol class="project-section-list list-decimal list-inside text-slate-700 space-y-4">
                     <li>
-                        <strong id="activity1-title"></strong>
+                        <strong class="part-title" id="activity1-title"></strong>
                         <ul class="mt-2">
                             <li><strong>문제:</strong> <span id="activity1-problem"></span></li>
                             <li><strong>해결:</strong> <span id="activity1-solution"></span></li>
                         </ul>
                     </li>
                     <li>
-                        <strong id="activity2-title"></strong>
+                        <strong class="part-title" id="activity2-title"></strong>
                         <ul class="mt-2">
                             <li><strong>목표:</strong> <span id="activity2-goal"></span></li>
                             <li><strong>과정:</strong> 
@@ -68,7 +68,7 @@
                         </div>
                     </li>
                     <li>
-                        <strong id="activity3-title"></strong>
+                        <strong class="part-title" id="activity3-title"></strong>
                         <ul class="mt-2">
                             <li><strong>문제:</strong> <span id="activity3-problem"></span></li>
                             <li><strong>가설:</strong> <span id="activity3-hypothesis"></span></li>
@@ -90,7 +90,7 @@
                         </div>
                     </li>
                     <li>
-                        <strong id="activity4-title"></strong>
+                        <strong class="part-title" id="activity4-title"></strong>
                         <ul class="mt-2">
                             <li><strong>문제:</strong> <span id="activity4-problem"></span></li>
                             <li><strong>해결:</strong> <span id="activity4-retry"></span></li>
@@ -146,12 +146,16 @@
                 <h4>주요 구현 내용 (3-Parts)</h4>
                 <ol class="project-section-list list-decimal list-inside text-slate-700 space-y-4">
                     <li>
-                        <div class="part-title" id="part1-title"></div>
+                        <strong id="part1-title"></strong>
                         <div class="part-desc" id="part1-desc"></div>
                         <ul class="list-disc list-inside ml-4" id="part1-items"></ul>
+                        <button id="toggle-part1-img" class="toggle-btn mt-3">구현 사진 보기</button>
+                        <div id="part1-img-container" class="image-container hidden">
+                            <img src="images/p2_images/f1.png" alt="채팅 프로그램 구현" class="project-image">
+                        </div>
                     </li>
                     <li>
-                        <div class="part-title" id="part2-title"></div>
+                        <strong id="part2-title"></strong>
                         <div class="part-desc" id="part2-desc"></div>
                         <ul class="list-disc list-inside ml-4">
                             <li><strong id="part2-rdt-title"></strong>:
@@ -163,9 +167,22 @@
                             </li>
                             <li><strong>결과:</strong> <span id="part2-result"></span></li>
                         </ul>
+                        <button id="toggle-part2-img" class="toggle-btn mt-3">구현 사진 보기</button>
+                        <div id="part2-img-container" class="image-container hidden">
+                            <div class="image-grid">
+                                <div class="image-item">
+                                    <p class="image-title">채팅 화면</p>
+                                    <img src="images/p2_images/f2-1.png" alt="채팅 화면" class="project-image">
+                                </div>
+                                <div class="image-item">
+                                    <p class="image-title">파일 수신 확인</p>
+                                    <img src="images/p2_images/f2.png" alt="파일 수신 확인" class="project-image">
+                                </div>
+                            </div>
+                        </div>
                     </li>
                     <li>
-                        <div class="part-title" id="part3-title"></div>
+                        <strong id="part3-title"></strong>
                         <div class="part-desc" id="part3-desc"></div>
                         <ul class="list-disc list-inside ml-4">
                             <li><strong>ARP 스캐너:</strong> <span id="part3-arp"></span></li>
