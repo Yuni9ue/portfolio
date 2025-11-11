@@ -1,10 +1,9 @@
 let projectsData = null;
-let currentTab = 1;
 
 document.addEventListener('DOMContentLoaded', async () => {
     await loadProjects();
-    renderTabs();
-    renderProject(currentTab);
+    loadProject(1);
+    setupTabs();
 });
 
 async function loadProjects() {
@@ -17,129 +16,167 @@ async function loadProjects() {
     }
 }
 
-function renderTabs() {
-    const tabsContainer = document.getElementById('tabs-container');
-    projectsData.forEach((project, index) => {
-        const button = document.createElement('button');
-        button.id = `tab-btn-${project.id}`;
-        button.setAttribute('data-tab', project.id);
-        button.className = `nav-tab ${project.id === 1 ? 'active-tab' : ''}`;
-        button.textContent = `${project.id}. ${project.title.split(' ')[0]} ${project.title.split(' ')[1] || ''}`;
-        
-        button.addEventListener('click', () => {
-            document.querySelectorAll('.nav-tab').forEach(tab => tab.classList.remove('active-tab'));
-            button.classList.add('active-tab');
-            currentTab = project.id;
-            renderProject(project.id);
+function setupTabs() {
+    const tabs = document.querySelectorAll('.nav-tab');
+    const contents = document.querySelectorAll('.project-content');
+
+    tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            const tabId = parseInt(tab.getAttribute('data-tab'));
+
+            tabs.forEach(t => t.classList.remove('active-tab'));
+            tab.classList.add('active-tab');
+
+            contents.forEach(content => {
+                content.classList.add('hidden');
+            });
+
+            document.getElementById(`content-${tabId}`).classList.remove('hidden');
+            loadProject(tabId);
         });
-        
-        tabsContainer.appendChild(button);
     });
 }
 
-function renderProject(projectId) {
+function loadProject(projectId) {
     const project = projectsData.find(p => p.id === projectId);
     if (!project) return;
-    
-    const container = document.getElementById('content-container');
-    container.innerHTML = '';
-    
-    const section = document.createElement('section');
-    section.className = 'project-content';
-    
-    section.innerHTML = `
-        <h2>${project.title}</h2>
-        <h3>${project.subtitle}</h3>
-        
-        <p class="text-sm text-slate-500 mb-4">
-            <span class="font-medium">프로젝트 기간:</span> ${project.period}
-        </p>
 
-        <h4>🛠️ 사용 기술 ${project.id === 3 ? '' : '스택'}</h4>
-        <div>
-            ${project.techStack.map(tech => `<span class="tech-tag">${tech}</span>`).join('')}
-        </div>
-
-        ${renderProjectContent(project)}
-    `;
-    
-    container.appendChild(section);
+    if (projectId === 1) {
+        loadProject1(project);
+    } else if (projectId === 2) {
+        loadProject2(project);
+    } else if (projectId === 3) {
+        loadProject3(project);
+    }
 }
 
-function renderProjectContent(project) {
-    if (project.id === 1) {
-        return `
-            <h4>🚀 주요 활동 및 문제 해결 경험</h4>
-            <ol class="project-section-list list-decimal list-inside text-slate-700 space-y-4">
-                ${project.activities.map(activity => `
-                    <li>
-                        <strong>${activity.title}</strong>
-                        <ul class="mt-2">
-                            ${activity.items.map(item => `<li>${item}</li>`).join('')}
-                        </ul>
-                    </li>
-                `).join('')}
-            </ol>
+function loadProject1(project) {
+    document.getElementById('project1-title').textContent = project.title;
+    document.getElementById('project1-subtitle').textContent = project.subtitle;
+    document.getElementById('project1-period').textContent = project.period;
 
-            <h4>📊 프로젝트 핵심 성과</h4>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 my-6">
-                ${project.stats.map(stat => `
-                    <div class="stat-card">
-                        <div class="stat-value">${stat.value}</div>
-                        <div class="stat-label">${stat.label}</div>
-                    </div>
-                `).join('')}
-            </div>
-            <ul>
-                ${project.achievements.map(achievement => `<li>${achievement}</li>`).join('')}
-            </ul>
-        `;
-    } else if (project.id === 2) {
-        return `
-            <h4>📜 주요 구현 내용 (3-Parts)</h4>
-            <ol class="project-section-list list-decimal list-inside text-slate-700 space-y-4">
-                ${project.parts.map(part => `
-                    <li>
-                        <div class="part-title">${part.title}</div>
-                        <div class="part-desc">${part.desc}</div>
-                        <ul class="list-disc list-inside ml-4">
-                            ${part.items.map(item => `<li>${item}</li>`).join('')}
-                        </ul>
-                    </li>
-                `).join('')}
-            </ol>
+    const techstackContainer = document.getElementById('project1-techstack');
+    techstackContainer.innerHTML = project.techStack.map(tech => 
+        `<span class="tech-tag">${tech}</span>`
+    ).join('');
 
-            <h4>💡 문제 해결 및 성과</h4>
-            <ul>
-                ${project.problemSolving.map(item => `<li>${item}</li>`).join('')}
-            </ul>
-        `;
-    } else if (project.id === 3) {
-        return `
-            <h4>📜 주요 구현 내용</h4>
-            <ul>
-                ${project.implementations.map(impl => `<li>${impl}</li>`).join('')}
-            </ul>
+    document.getElementById('activity1-title').textContent = project.activities[0].title;
+    document.getElementById('activity1-problem').textContent = project.activities[0].problem;
+    document.getElementById('activity1-solution').textContent = project.activities[0].solution;
 
-            <h4>💡 문제 해결 및 성과</h4>
-            <ul>
-                ${project.problemSolving.map(item => `<li>${item}</li>`).join('')}
-            </ul>
+    document.getElementById('activity2-title').textContent = project.activities[1].title;
+    document.getElementById('activity2-goal').textContent = project.activities[1].goal;
+    const processContainer = document.getElementById('activity2-process');
+    processContainer.innerHTML = project.activities[1].process.map(item => 
+        `<li>${item}</li>`
+    ).join('');
 
-            <h4>🧠 AI 시대와 Prolog에 대한 고찰</h4>
-            <div class="reflection-box">
-                ${project.reflection.sections.map(section => `
-                    <h5>${section.title}</h5>
-                    ${section.content ? `<p class="mb-3">${section.content}</p>` : ''}
-                    ${section.list ? `
-                        <ul class="list-disc list-inside ${section.content2 ? 'mb-3' : ''} space-y-2">
-                            ${section.list.map(item => `<li>${item}</li>`).join('')}
-                        </ul>
-                    ` : ''}
-                    ${section.content2 ? `<p class="mb-3">${section.content2}</p>` : ''}
-                    ${section.conclusion ? `<p class="mt-4 font-medium">${section.conclusion}</p>` : ''}
-                `).join('')}
-            </div>
-        `;
-    }
+    document.getElementById('activity3-title').textContent = project.activities[2].title;
+    document.getElementById('activity3-problem').textContent = project.activities[2].problem;
+    document.getElementById('activity3-hypothesis').textContent = project.activities[2].hypothesis;
+    document.getElementById('activity3-attempt').textContent = project.activities[2].attempt;
+    document.getElementById('activity3-conclusion').textContent = project.activities[2].conclusion;
+
+    document.getElementById('activity4-title').textContent = project.activities[3].title;
+    document.getElementById('activity4-problem').textContent = project.activities[3].problem;
+    document.getElementById('activity4-retry').textContent = project.activities[3].retry;
+    document.getElementById('activity4-result').textContent = project.activities[3].result;
+    document.getElementById('activity4-conclusion').textContent = project.activities[3].conclusion;
+
+    document.getElementById('stat1-value').textContent = project.stats[0].value;
+    document.getElementById('stat1-label').textContent = project.stats[0].label;
+    document.getElementById('stat2-value').textContent = project.stats[1].value;
+    document.getElementById('stat2-label').textContent = project.stats[1].label;
+
+    document.getElementById('achievement1-title').textContent = project.achievements[0].title;
+    document.getElementById('achievement1-content').textContent = project.achievements[0].content;
+    document.getElementById('achievement2-title').textContent = project.achievements[1].title;
+    document.getElementById('achievement2-item1-subtitle').textContent = project.achievements[1].items[0].subtitle;
+    document.getElementById('achievement2-item1-content').textContent = project.achievements[1].items[0].content;
+    document.getElementById('achievement2-item2-subtitle').textContent = project.achievements[1].items[1].subtitle;
+    document.getElementById('achievement2-item2-content').textContent = project.achievements[1].items[1].content;
+}
+
+function loadProject2(project) {
+    document.getElementById('project2-title').textContent = project.title;
+    document.getElementById('project2-subtitle').textContent = project.subtitle;
+    document.getElementById('project2-period').textContent = project.period;
+
+    const techstackContainer = document.getElementById('project2-techstack');
+    techstackContainer.innerHTML = project.techStack.map(tech => 
+        `<span class="tech-tag">${tech}</span>`
+    ).join('');
+
+    document.getElementById('part1-title').textContent = project.parts[0].title;
+    document.getElementById('part1-desc').textContent = project.parts[0].desc;
+    const part1Items = document.getElementById('part1-items');
+    part1Items.innerHTML = project.parts[0].items.map(item => `<li>${item}</li>`).join('');
+
+    document.getElementById('part2-title').textContent = project.parts[1].title;
+    document.getElementById('part2-desc').textContent = project.parts[1].desc;
+    document.getElementById('part2-rdt-title').textContent = project.parts[1].rdtTitle;
+    document.getElementById('rdt1-subtitle').textContent = project.parts[1].rdtItems[0].subtitle;
+    document.getElementById('rdt1-content').textContent = project.parts[1].rdtItems[0].content;
+    document.getElementById('rdt2-subtitle').textContent = project.parts[1].rdtItems[1].subtitle;
+    document.getElementById('rdt2-content').textContent = project.parts[1].rdtItems[1].content;
+    document.getElementById('rdt3-subtitle').textContent = project.parts[1].rdtItems[2].subtitle;
+    document.getElementById('rdt3-content').textContent = project.parts[1].rdtItems[2].content;
+    document.getElementById('part2-result').textContent = project.parts[1].result;
+
+    document.getElementById('part3-title').textContent = project.parts[2].title;
+    document.getElementById('part3-desc').textContent = project.parts[2].desc;
+    document.getElementById('part3-arp').textContent = project.parts[2].arpScanner;
+    document.getElementById('part3-mobility-title').textContent = project.parts[2].mobilityTitle;
+    document.getElementById('mobility1-case').textContent = project.parts[2].mobilityItems[0].case;
+    document.getElementById('mobility1-content').textContent = project.parts[2].mobilityItems[0].content;
+    document.getElementById('mobility2-case').textContent = project.parts[2].mobilityItems[1].case;
+    document.getElementById('mobility2-content').textContent = project.parts[2].mobilityItems[1].content;
+
+    document.getElementById('project2-problem').textContent = project.problemSolving.problem;
+    document.getElementById('project2-solution').textContent = project.problemSolving.solution;
+    document.getElementById('project2-achievement').textContent = project.problemSolving.achievement;
+}
+
+function loadProject3(project) {
+    document.getElementById('project3-title').textContent = project.title;
+    document.getElementById('project3-subtitle').textContent = project.subtitle;
+    document.getElementById('project3-period').textContent = project.period;
+
+    const techstackContainer = document.getElementById('project3-techstack');
+    techstackContainer.innerHTML = project.techStack.map(tech => 
+        `<span class="tech-tag">${tech}</span>`
+    ).join('');
+
+    document.getElementById('impl1-title').textContent = project.implementations[0].title;
+    document.getElementById('impl1-content').textContent = project.implementations[0].content;
+    document.getElementById('impl2-title').textContent = project.implementations[1].title;
+    document.getElementById('impl2-content').textContent = project.implementations[1].content;
+    document.getElementById('impl3-title').textContent = project.implementations[2].title;
+    document.getElementById('impl3-content').textContent = project.implementations[2].content;
+    document.getElementById('impl4-title').textContent = project.implementations[3].title;
+    document.getElementById('impl4-content').textContent = project.implementations[3].content;
+
+    document.getElementById('project3-problem').textContent = project.problemSolving.problem;
+    document.getElementById('project3-solution').textContent = project.problemSolving.solution;
+    document.getElementById('project3-achievement').textContent = project.problemSolving.achievement;
+
+    document.getElementById('reflection1-title').textContent = project.reflection.feature.title;
+    document.getElementById('reflection1-content').textContent = project.reflection.feature.content;
+
+    document.getElementById('reflection2-title').textContent = project.reflection.aiRole.title;
+    document.getElementById('reflection2-intro').textContent = project.reflection.aiRole.intro;
+    document.getElementById('aitype1-type').textContent = project.reflection.aiRole.aiTypes[0].type;
+    document.getElementById('aitype1-desc').textContent = project.reflection.aiRole.aiTypes[0].desc;
+    document.getElementById('aitype2-type').textContent = project.reflection.aiRole.aiTypes[1].type;
+    document.getElementById('aitype2-desc').textContent = project.reflection.aiRole.aiTypes[1].desc;
+    document.getElementById('reflection2-combined').textContent = project.reflection.aiRole.combined;
+
+    document.getElementById('reflection3-title').textContent = project.reflection.potentialRoles.title;
+    document.getElementById('role1-title').textContent = project.reflection.potentialRoles.items[0].role;
+    document.getElementById('role1-desc').textContent = project.reflection.potentialRoles.items[0].desc;
+    document.getElementById('role2-title').textContent = project.reflection.potentialRoles.items[1].role;
+    document.getElementById('role2-desc').textContent = project.reflection.potentialRoles.items[1].desc;
+    document.getElementById('role3-title').textContent = project.reflection.potentialRoles.items[2].role;
+    document.getElementById('role3-desc').textContent = project.reflection.potentialRoles.items[2].desc;
+    document.getElementById('reflection-conclusion').textContent = project.reflection.potentialRoles.conclusion;
 }

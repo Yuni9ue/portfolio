@@ -3,52 +3,37 @@
     {
       "id": 1,
       "title": "TPC-H 벤치마크를 이용한 데이터베이스 성능 평가",
-      "subtitle": "100GB 규모의 TPC-H 벤치마크 데이터를 생성하여, RDBMS와 NoSQL 데이터베이스 시스템 간의 성능을 비교 분석한 팀 프로젝트입니다.",
-      "period": "202X.XX ~ 202X.XX (팀 프로젝트)",
-      "techStack": [
-        "PostgreSQL",
-        "MySQL",
-        "Cassandra",
-        "MongoDB",
-        "AWS EC2",
-        "Ubuntu OS",
-        "TPC-H (DBGEN)",
-        "cassandra.yaml",
-        "my.cnf",
-        "nodetool"
-      ],
+      "subtitle": "100GB 규모의 TPC-H 벤치마크 데이터를 생성하여, RDBMS와 NoSQL 데이터베이스 시스템 간의 성능을 비교 분석하고 성능 개선까지 시도한 팀 프로젝트입니다.",
+      "period": "2024.09 ~ 2024.12 (팀 프로젝트)",
+      "techStack": ["PostgreSQL", "MySQL", "Cassandra", "MongoDB", "AWS EC2", "Ubuntu OS"],
       "activities": [
         {
           "title": "1. 인프라 구축 및 확장 (AWS EC2)",
-          "items": [
-            "<strong>문제:</strong> 초기 단일 EC2 인스턴스(`t3a.xlarge`) 환경에서 100GB 데이터 처리 시, 컴퓨팅 자원 부족 문제에 직면했습니다.",
-            "<strong>해결:</strong> 4개의 EC2 인스턴스로 확장하고, 인스턴스 사양을 `c5.4xlarge` 등으로 업그레이드하여 안정적인 테스트 환경을 구축했습니다."
-          ]
+          "problem": "초기 단일 EC2 인스턴스(`t3a.xlarge`) 환경에서 100GB 데이터 처리 시, 컴퓨팅 자원 부족 문제에 직면했습니다.",
+          "solution": "4개의 EC2 인스턴스로 확장하고, 인스턴스 사양을 `c5.4xlarge` 등으로 업그레이드하여 안정적인 테스트 환경을 구축했습니다."
         },
         {
           "title": "2. Cassandra Multi-Node 클러스터 구축",
-          "items": [
-            "<strong>목표:</strong> 데이터베이스 확장성(Scalability)을 실증적으로 분석하기 위해 4-Node Cassandra 클러스터를 구축했습니다.",
-            "<strong>과정:</strong><ul class='list-disc list-inside ml-4 mt-1'><li>AWS 보안 그룹에서 클라이언트 포트(9042) 및 노드 간 통신 포트(7000)를 개방했습니다.</li><li>`cassandra.yaml` 설정 파일에서 Seed 노드 IP를 지정하고 노드 간 `listen_address`를 설정하여 클러스터를 구성했습니다.</li><li>`nodetool status` 명령어를 사용해 4개 노드가 모두 정상(Status=UN) 연결되었는지 확인했습니다.</li></ul>"
+          "goal": "데이터베이스 확장성(Scalability)을 실증적으로 분석하기 위해 4-Node Cassandra 클러스터를 구축했습니다.",
+          "process": [
+            "AWS 보안 그룹에서 클라이언트 포트(9042) 및 노드 간 통신 포트(7000)를 개방했습니다.",
+            "`cassandra.yaml` 설정 파일에서 Seed 노드 IP를 지정하고 노드 간 `listen_address`를 설정하여 클러스터를 구성했습니다.",
+            "`nodetool status` 명령어를 사용해 4개 노드가 모두 정상(Status=UN) 연결되었는지 확인했습니다."
           ]
         },
         {
           "title": "3. MongoDB 성능 이슈 분석 및 스키마 재설계",
-          "items": [
-            "<strong>문제:</strong> MongoDB 환경에서 복잡한 TPC-H 쿼리 실행 시 'broken pipe' 및 'MaxTimeMSExpired' (4시간 이상 초과) 오류가 발생하며 쿼리가 실패했습니다.",
-            "<strong>가설:</strong> 정규화된 SQL 스키마를 그대로 MongoDB에 로드하여, 쿼리 수행 시 과도한 `$lookup` (SQL의 JOIN) 연산이 발생한 것을 원인으로 진단했습니다.",
-            "<strong>시도:</strong> MongoDB의 Document 모델에 최적화하기 위해, 'supplier' 내부에 'nation'과 'region' 정보를 내장(Embedding)하는 비정규화(Denormalization) 스키마로 데이터를 재설계했습니다.",
-            "<strong>결론:</strong> 스키마를 개선했음에도 쿼리 타임아웃이 재발생했으며, 이를 통해 TPC-H 벤치마크의 복잡한 관계형 조인 쿼리는 MongoDB의 Aggregation Framework에 부적합하다는 결론을 도출했습니다."
-          ]
+          "problem": "MongoDB 환경에서 복잡한 TPC-H 쿼리 실행 시 'broken pipe' 및 'MaxTimeMSExpired' (4시간 이상 초과) 오류가 발생하며 쿼리가 실패했습니다.",
+          "hypothesis": "정규화된 SQL 스키마를 그대로 MongoDB에 로드하여, 쿼리 수행 시 과도한 `$lookup` (SQL의 JOIN) 연산이 발생한 것을 원인으로 진단했습니다.",
+          "attempt": "MongoDB의 Document 모델에 최적화하기 위해, 'supplier' 내부에 'nation'과 'region' 정보를 내장(Embedding)하는 비정규화(Denormalization) 스키마로 데이터를 재설계했습니다.",
+          "conclusion": "스키마를 개선했음에도 쿼리 타임아웃이 재발생했으며, 이를 통해 TPC-H 벤치마크의 복잡한 관계형 조인 쿼리는 MongoDB의 Aggregation Framework에 부적합하다는 결론을 도출했습니다."
         },
         {
           "title": "4. MySQL 성능 튜닝 (후속 연구)",
-          "items": [
-            "<strong>문제:</strong> 100GB 데이터 로드 및 쿼리 중 서버 다운 등 불안정 문제가 발생하여, 초기 튜닝 시도(버퍼 풀 조정)가 유의미한 결과를 내지 못했습니다.",
-            "<strong>재시도:</strong> 10GB 데이터셋으로 환경을 재구성하여, `my.cnf` 파일의 `innodb_buffer_pool_size` (1G, 26G, 29G) 값을 변경하며 성능을 테스트했습니다.",
-            "<strong>결과:</strong> 버퍼 풀 크기를 1GB에서 26/29GB로 늘리자, 대규모 디스크 I/O를 유발하는 쿼리(Q17, Q20)의 실행 시간이 각각 <strong>1/3, 1/4 수준으로 단축</strong>되는 것을 확인했습니다.",
-            "<strong>결론:</strong> 대용량 데이터 처리 시, 충분한 버퍼 풀 메모리 확보를 통한 디스크 I/O 감소가 성능 향상에 핵심적임을 입증했습니다."
-          ]
+          "problem": "100GB 데이터 로드 및 쿼리 중 서버 다운 등 불안정 문제가 발생하여, 초기 튜닝 시도(버퍼 풀 조정)가 유의미한 결과를 내지 못했습니다.",
+          "retry": "10GB 데이터셋으로 환경을 재구성하여, `my.cnf` 파일의 `innodb_buffer_pool_size` (1G, 26G, 29G) 값을 변경하며 성능을 테스트했습니다.",
+          "result": "버퍼 풀 크기를 1GB에서 26/29GB로 늘리자, 대규모 디스크 I/O를 유발하는 쿼리(Q17, Q20)의 실행 시간이 각각 1/3, 1/4 수준으로 단축되는 것을 확인했습니다.",
+          "conclusion": "대용량 데이터 처리 시, 충분한 버퍼 풀 메모리 확보를 통한 디스크 I/O 감소가 성능 향상에 핵심적임을 입증했습니다."
         }
       ],
       "stats": [
@@ -62,27 +47,31 @@
         }
       ],
       "achievements": [
-        "<strong>Cassandra 확장성 입증:</strong> Cassandra Multi-node(4대) 구성은 Single-node 대비 <strong>전체 쿼리 실행 시간을 67.95% 단축</strong>시켰습니다. 이는 병렬 처리 및 분산 아키텍처의 효율성을 명확하게 보여줍니다.",
-        "<strong>RDBMS vs NoSQL 특성 비교:</strong><ul class='list-disc list-inside ml-4 mt-1'><li><strong>RDBMS (PostgreSQL, MySQL):</strong> TPC-H의 복잡한 조인 및 집계 쿼리 실행에 강점을 보였습니다.</li><li><strong>NoSQL (Cassandra, MongoDB):</strong> Cassandra는 분산 환경의 병렬 처리 및 특정 필터링/집계 쿼리에 강점을 보였으나, MongoDB는 복잡한 관계형 쿼리 실행에 실패하며 한계를 보였습니다.</li></ul>"
+        {
+          "title": "Cassandra 확장성 입증",
+          "content": "Cassandra Multi-node(4대) 구성은 Single-node 대비 전체 쿼리 실행 시간을 67.95% 단축시켰습니다. 이는 병렬 처리 및 분산 아키텍처의 효율성을 명확하게 보여줍니다."
+        },
+        {
+          "title": "RDBMS vs NoSQL 특성 비교",
+          "items": [
+            {
+              "subtitle": "RDBMS (PostgreSQL, MySQL)",
+              "content": "TPC-H의 복잡한 조인 및 집계 쿼리 실행에 강점을 보였습니다."
+            },
+            {
+              "subtitle": "NoSQL (Cassandra, MongoDB)",
+              "content": "Cassandra는 분산 환경의 병렬 처리 및 특정 필터링/집계 쿼리에 강점을 보였으나, MongoDB는 복잡한 관계형 쿼리 실행에 실패하며 한계를 보였습니다."
+            }
+          ]
+        }
       ]
     },
     {
       "id": 2,
       "title": "TCP/UDP 기반 네트워크 응용 프로그램",
-      "subtitle": "[1부] 기본 채팅부터 [2부] 신뢰성 있는 파일 전송(RDT), [3부] 네트워크 스캐너 기능까지 단계별로 구현한 네트워크 응용 프로그램 개발 프로젝트입니다.",
-      "period": "202X.XX ~ 202X.XX (팀 프로젝트)",
-      "techStack": [
-        "Python",
-        "socket",
-        "scapy",
-        "TCP/IP",
-        "UDP",
-        "ARP",
-        "Sliding Window",
-        "RDT",
-        "Windows",
-        "macOS"
-      ],
+      "subtitle": "TCP/UDP를 이용해 기본 채팅부터 신뢰성 있는 파일 전송까지 구현하여 확인해보고, 네트워크 스캐너 기능까지 구현하여 네트워크에 대한 이해를 향상 시킨 프로젝트입니다.",
+      "period": "2024.09 ~ 2024.12 (팀 프로젝트)",
+      "techStack": ["Python","TCP", "UDP","WireShark"],
       "parts": [
         {
           "title": "Part 1. 기본 소켓 채팅 프로그램",
@@ -95,74 +84,102 @@
         {
           "title": "Part 2. 신뢰성 있는 파일 전송 (RDT)",
           "desc": "1부의 채팅 프로그램에 파일 전송 기능을 추가하고, 특히 UDP의 비신뢰성을 극복하기 위한 RDT(Reliable Data Transfer) 프로토콜을 직접 구현했습니다.",
-          "items": [
-            "<strong>UDP 신뢰성 보장 (RDT):</strong><ul class='list-disc list-inside ml-6 mt-1'><li><strong>Sliding Window (GBN/SR):</strong> ACK 번호(`udp_ack_num`)와 패킷 시퀀스 번호(`udp_last_ack_num`)를 관리하는 슬라이딩 윈도우 메커니즘을 구현했습니다.</li><li><strong>Timeout 및 재전송:</strong> `udp_time_out()` 함수로 ACK 수신 시간을 체크하고, 타임아웃 발생 시 `udp_pipeline()` 함수를 통해 해당 패킷을 재전송하여 데이터 유실을 방지했습니다.</li><li><strong>패킷 버퍼링:</strong> 수신 측에서 순서가 맞지 않는 패킷을 `udp_recv_packet` 버퍼에 임시 저장하고, 연속된 패킷이 도착하면 파일에 순차적으로 쓰도록 구현했습니다.</li></ul>",
-            "<strong>결과:</strong> TCP와 UDP 양쪽 프로토콜로 이미지, 텍스트 파일 등을 성공적으로 전송하고, `downloads` 폴더에 저장되는 것을 확인했습니다."
-          ]
+          "rdtTitle": "UDP 신뢰성 보장 (RDT)",
+          "rdtItems": [
+            {
+              "subtitle": "Sliding Window (GBN/SR)",
+              "content": "ACK 번호와 패킷 시퀀스 번호를 관리하는 슬라이딩 윈도우 메커니즘을 구현했습니다."
+            },
+            {
+              "subtitle": "Timeout 및 재전송",
+              "content": "ACK 수신 시간을 체크하고, 타임아웃 발생 시 해당 패킷을 재전송하여 데이터 유실을 방지했습니다."
+            },
+            {
+              "subtitle": "패킷 버퍼링",
+              "content": "수신 측에서 순서가 맞지 않는 패킷을 버퍼에 임시 저장하고, 연속된 패킷이 도착하면 파일에 순차적으로 쓰도록 구현했습니다."
+            }
+          ],
+          "result": "TCP와 UDP 양쪽 프로토콜로 이미지, 텍스트 파일 등을 성공적으로 전송하고, 수신자의 폴더에 저장되는 것을 확인했습니다."
         },
         {
           "title": "Part 3. ARP 스캐너 및 모빌리티 분석",
-          "desc": "`scapy` 라이브러리를 활용해 ARP 스캐너를 구현하고, 네트워크 환경 이동(Mobility)에 따른 IP 주소와 ARP 테이블의 변화를 분석했습니다.",
-          "items": [
-            "<strong>ARP 스캐너:</strong> `scapy`를 사용해 지정된 IP 대역에 ARP Request(Broadcast) 패킷을 전송하고, 수신된 ARP Reply를 분석하여 로컬 네트워크 내 활성 장치들의 IP와 MAC 주소 목록을 확보했습니다.",
-            "<strong>모빌리티 분석:</strong><ul class='list-disc list-inside ml-6 mt-1'><li><strong>Case 1 (같은 장소):</strong> 동일 AP에서 재연결 시, IP 주소가 변경되지 않았으며 기존 IP-MAC 매핑을 재확인하는 ARP 요청만 관찰되었습니다.</li><li><strong>Case 2 (장소 이동):</strong> 다른 AP로 이동하자, DHCP를 통해 새로운 IP 주소를 할당받았으며, 새 네트워크의 게이트웨이를 찾기 위해 새로운 ARP 요청을 보내는 것을 확인했습니다.</li></ul>"
+          "desc": "'scapy' 라이브러리를 활용해 ARP 스캐너를 구현하고, 네트워크 환경 이동에 따른 IP 주소와 ARP 테이블의 변화를 분석했습니다.",
+          "arpScanner": "지정된 IP 대역에 ARP Request 패킷을 전송하고, 수신된 ARP Reply를 분석하여 로컬 네트워크 내 활성 장치들의 IP와 MAC 주소 목록을 확보했습니다.",
+          "mobilityTitle": "모빌리티 분석",
+          "mobilityItems": [
+            {
+              "case": "Case 1 (같은 장소)",
+              "content": "동일 AP에서 재연결 시, IP 주소가 변경되지 않았으며 기존 IP-MAC 매핑을 재확인하는 ARP 요청만 관찰되었습니다."
+            },
+            {
+              "case": "Case 2 (장소 이동)",
+              "content": "다른 AP로 이동하자, DHCP를 통해 새로운 IP 주소를 할당받았으며, 새 네트워크의 게이트웨이를 찾기 위해 새로운 ARP 요청을 보내는 것을 확인했습니다."
+            }
           ]
         }
       ],
-      "problemSolving": [
-        "<strong>[문제]</strong>: UDP로 파일 전송 시, 패킷 유실 및 순서 뒤바뀜 현상으로 파일이 깨졌습니다.",
-        "<strong>[해결]</strong>: TCP의 동작 원리를 참고하여, <strong>ACK 번호와 타임아웃 타이머, 윈도우(버퍼)를 직접 구현</strong>하여 RDT 프로토콜을 완성했습니다.",
-        "<strong>[성과]</strong>: 라이브러리에 의존하지 않고 <strong>네트워크 프로토콜의 핵심(신뢰성, 흐름 제어)을 직접 구현</strong>해보며, CS 기본 지식의 실제 적용 능력을 향상시켰습니다."
-      ]
+      "problemSolving": {
+        "problem": "UDP로 파일 전송 시, 패킷 유실 및 순서 뒤바뀜 현상으로 파일이 깨졌습니다.",
+        "solution": "TCP의 동작 원리를 참고하여, ACK 번호와 타임아웃 타이머, 윈도우(버퍼)를 직접 구현하여 RDT 프로토콜을 완성했습니다.",
+        "achievement": "네트워크 프로토콜의 핵심(신뢰성, 흐름 제어)을 직접 구현해보며, CS 기본 지식의 실제 적용 능력을 향상시켰습니다."
+      }
     },
     {
       "id": 3,
       "title": "Prolog 기반 학생 생활 시뮬레이션 에이전트",
-      "subtitle": "논리형 언어 Prolog를 사용하여, 학생의 상태와 시간표에 따라 46시간의 행동을 자동으로 결정하고 최종 성과를 시뮬레이션하는 규칙 기반 에이전트를 구현했습니다.",
-      "period": "202X.XX ~ 202X.XX (개인 프로젝트)",
-      "techStack": [
-        "Prolog",
-        "SWI-Prolog",
-        "Logic Programming"
-      ],
+      "subtitle": "논리형 프로그래밍에 대한 이해도를 향상시키고 현재 AI와 논리형 프로그래밍을 비교해본 프로젝트입니다.",
+      "period": "2024.09 ~ 2024.12 (개인 프로젝트)",
+      "techStack": ["Prolog"],
       "implementations": [
-        "<strong>Fact & Rule 정의</strong>: 학생의 5가지 상태(HP, Int, MP, Hunger, Project)를 `Fact`로, 행동 결정 로직을 `Rule`로 정의했습니다.",
-        "<strong>우선순위 기반 행동 결정</strong>: `식사 > 수면 > 휴식 > 수업 > 프로젝트` 순서의 명확한 우선순위를 `decide_action` 규칙으로 구현했습니다.",
-        "<strong>재귀적 시뮬레이션</strong>: `process_schedule` 규칙이 46시간을 재귀적으로 처리하며 매시간 상태 변화를 추적하고, 최종 Exam/Project 점수를 도출했습니다.",
-        "<strong>Python과 비교 분석</strong>: 동일한 로직을 Python의 `if-elif-else` 문으로 구현해보며, 절차형 언어와 논리형 언어의 패러다임 차이점을 고찰했습니다."
+        {
+          "title": "Fact & Rule을 통해 학생의 상태를 정의하고 행동 결정 로직을 구현했습니다.",
+          "content": "학생의 5가지 상태(HP, Int, MP, Hunger, Project)를 `Fact`로, 행동 결정 로직을 `Rule`로 정의했습니다. 학생의 상태에 따라 행동을 결정하고 최종 성과를 도출하는 규칙 기반 에이전트를 구현했습니다."
+        }
       ],
-      "problemSolving": [
-        "<strong>[문제]</strong>: '최적의 스케줄'을 찾아야 하는 문제에서 Prolog의 접근법을 고민했습니다.",
-        "<strong>[해결]</strong>: 이번 과제는 '최적 탐색'보다는 '정해진 우선순위'가 명확한 문제임을 파악하고, Prolog의 `->` 연산자(If-Then-Else)를 활용해 절차적 언어의 `if-elif` 구조를 효율적으로 모델링했습니다.",
-        "<strong>[성과]</strong>: Python, C 등 절차형/객체지향 언어 외에 <strong>논리형 프로그래밍이라는 새로운 패러다임</strong>을 학습하고 적용했으며, 이를 통해 <strong>AI의 '규칙 기반 전문가 시스템'의 기본 원리</strong>를 이해했습니다."
-      ],
+      "problemSolving": {
+        "problem": "'최적의 스케줄'을 찾아야 하는 문제에서 Prolog의 접근법을 고민했습니다.",
+        "solution": "이번 과제는 '최적 탐색'보다는 '정해진 우선순위'가 명확한 문제임을 파악하고, Prolog의 `->` 연산자(If-Then-Else)를 활용해 절차적 언어의 `if-elif` 구조를 효율적으로 모델링했습니다.",
+        "achievement": "Python, C 등 절차형/객체지향 언어 외에 논리형 프로그래밍이라는 새로운 패러다임을 학습하고 적용했으며, 이를 통해 AI의 '규칙 기반 전문가 시스템'의 기본 원리를 이해했습니다."
+      },
       "reflection": {
-        "sections": [
-          {
-            "title": "1. 프로젝트에서 느낀 Prolog의 특징",
-            "content": "이 프로젝트는 '어떻게(How)'가 명확한(식사 > 수면 > 휴식...) 절차적 문제였기에 Python의 `if-elif-else`와 큰 차이를 느끼지 못했습니다. 하지만 만약 \"최종 점수를 최대화하는 최적의 스케줄 조합을 찾아라\"라는 문제였다면, Prolog의 <strong>'자동 탐색'과 '논리 추론'</strong> 기능이 훨씬 강력했을 것입니다."
-          },
-          {
-            "title": "2. 현대 AI 시대에서 Prolog의 역할: \"설명 가능한 뇌\"",
-            "content": "이 경험은 현대 AI의 과제와 일치합니다.",
-            "list": [
-              "<strong>통계적 AI (딥러닝)</strong>: 데이터에서 '패턴'을 학습합니다. 강력하지만 '왜'인지 알기 어려운 **'블랙박스(Black Box)'**입니다.",
-              "<strong>심볼릭 AI (Prolog)**: 인간의 '지식'과 '규칙'으로 '논리'를 추론합니다. 근거가 명확하지만 스스로 학습하긴 어렵습니다."
-            ],
-            "content2": "AI가 성숙하며 이 둘을 결합한 **\"신경-심볼릭 AI (Neuro-Symbolic AI)\"**가 주목받고 있습니다. 딥러닝이 '직관'을 얻으면, Prolog가 '추론'을 수행하는 것입니다."
-          },
-          {
-            "title": "Prolog의 잠재적 역할:",
-            "list": [
-              "<strong>설명 가능한 AI (XAI)</strong>: AI의 결정을 인간이 이해할 수 있는 '논리적 규칙'으로 설명합니다. (예: \"A 처방은 '고혈압' 규칙 때문입니다.\")",
-              "<strong>지식 그래프 / 전문가 시스템</strong>: 복잡한 도메인 지식(법률, 의료)을 규칙으로 정의하여 AI의 실수를 방지합니다.",
-              "<strong>고차원적 추론</strong>: 딥러닝이 \"고양이다\"라고 인식하면, Prolog가 \"고양이는 포유류다\"라는 지식을 연결해 더 깊은 추론을 가능하게 합니다."
-            ],
-            "conclusion": "결론: 딥러닝이 AI의 강력한 '근육'이라면, Prolog는 AI의 행동 원칙과 논리를 제공하는 '두뇌의 이성' 역할을 할 수 있으며, 더 정교하고 안전한 AI를 위해 필요한 기술입니다."
-          }
-        ]
+        "feature": {
+          "title": "1. 프로젝트에서 느낀 Prolog의 특징",
+          "content": "이 프로젝트는 규칙이 절차적으로 명확한 문제였기에 Python의 `if-elif-else`와 큰 차이를 느끼지 못했습니다. 하지만 만약 \"최종 점수를 최대화하는 최적의 스케줄 조합을 찾아라\"라는 문제였다면, Prolog의 '자동 탐색'과 '논리 추론' 기능이 훨씬 강력했을 것입니다."
+        },
+        "aiRole": {
+          "title": "2. 현대 AI 시대에서 Prolog의 역할 고찰",
+          "intro": "이 경험은 현대 AI의 과제와 일치합니다.",
+          "aiTypes": [
+            {
+              "type": "통계적 AI (딥러닝)",
+              "desc": "데이터에서 패턴을 학습합니다. 강력하지만 결과가 도출된 이유를 찾기가 어렵다."
+            },
+            {
+              "type": "심볼릭 AI (Prolog)",
+              "desc": "인간의 지식과 규칙으로 논리를 추론합니다. 근거가 명확하지만 스스로 학습하긴 어렵습니다."
+            }
+          ],
+          "combined": "AI가 성숙하며 이 둘을 결합한 \"신경-심볼릭 AI (Neuro-Symbolic AI)\"가 주목받고 있습니다. 딥러닝이 '직관'을 얻으면, Prolog가 '추론'을 수행하는 것입니다."
+        },
+        "potentialRoles": {
+          "title": "Prolog의 잠재적 역할:",
+          "items": [
+            {
+              "role": "설명 가능한 AI (XAI)",
+              "desc": "AI의 결정을 인간이 이해할 수 있는 '논리적 규칙'으로 설명합니다. (예: \"A 처방은 '고혈압' 규칙 때문입니다.\")"
+            },
+            {
+              "role": "지식 그래프 / 전문가 시스템",
+              "desc": "복잡한 도메인 지식(법률, 의료)을 규칙으로 정의하여 AI의 실수를 방지합니다."
+            },
+            {
+              "role": "고차원적 추론",
+              "desc": "딥러닝이 \"고양이다\"라고 인식하면, Prolog가 \"고양이는 포유류다\"라는 지식을 연결해 더 깊은 추론을 가능하게 합니다."
+            }
+          ],
+          "conclusion": "결론: 딥러닝이 AI의 강력한 '근육'이라면, Prolog는 AI의 행동 원칙과 논리를 제공하는 '두뇌의 이성' 역할을 할 수 있으며, 더 정교하고 안전한 AI를 위해 필요한 기술입니다."
+        }
       }
     }
   ]
 }
-

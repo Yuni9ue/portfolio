@@ -13,14 +13,191 @@
         <header class="text-center mb-10">
             <h1 class="text-4xl sm:text-5xl font-bold text-slate-900 mb-3">Projects</h1>
             <p class="text-lg text-slate-600 max-w-2xl mx-auto">
-                컴퓨터 공학의 핵심 원리를 깊이 있게 탐구하고 적용한 프로젝트들입니다. 대용량 데이터 처리, 네트워크 프로토콜 구현, 그리고 논리형 프로그래밍을 통해 문제 해결 역량을 길렀습니다.
+                의미 있었다고 느껴지거나 흥미롭다고 생각됐던 컴퓨터 과학 관련 프로젝트입니다.
             </p>
         </header>
 
-        <nav id="tabs-container" class="flex flex-col sm:flex-row justify-center space-y-3 sm:space-y-0 sm:space-x-4 mb-8">
+        <nav class="flex flex-col sm:flex-row justify-center space-y-3 sm:space-y-0 sm:space-x-4 mb-8">
+            <button id="tab-btn-1" data-tab="1" class="nav-tab active-tab">1.DB 구축 및 성능 평가</button>
+            <button id="tab-btn-2" data-tab="2" class="nav-tab">2. 네트워크 프로그래밍</button>
+            <button id="tab-btn-3" data-tab="3" class="nav-tab">3. Prolog 에이전트</button>
         </nav>
 
-        <main id="content-container">
+        <main>
+            <section id="content-1" class="project-content">
+                <h2 id="project1-title"></h2>
+                <h3 id="project1-subtitle"></h3>
+                
+                <p class="text-sm text-slate-500 mb-4">
+                    <span class="font-medium">프로젝트 기간:</span> <span id="project1-period"></span>
+                </p>
+
+                <h4>사용 기술 스택</h4>
+                <div id="project1-techstack"></div>
+
+                <h4>주요 활동 및 문제 해결 경험</h4>
+                <ol class="project-section-list list-decimal list-inside text-slate-700 space-y-4">
+                    <li>
+                        <strong id="activity1-title"></strong>
+                        <ul class="mt-2">
+                            <li><strong>문제:</strong> <span id="activity1-problem"></span></li>
+                            <li><strong>해결:</strong> <span id="activity1-solution"></span></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <strong id="activity2-title"></strong>
+                        <ul class="mt-2">
+                            <li><strong>목표:</strong> <span id="activity2-goal"></span></li>
+                            <li><strong>과정:</strong> 
+                                <ul class="list-disc list-inside ml-4 mt-1" id="activity2-process"></ul>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <strong id="activity3-title"></strong>
+                        <ul class="mt-2">
+                            <li><strong>문제:</strong> <span id="activity3-problem"></span></li>
+                            <li><strong>가설:</strong> <span id="activity3-hypothesis"></span></li>
+                            <li><strong>시도:</strong> <span id="activity3-attempt"></span></li>
+                            <li><strong>결론:</strong> <span id="activity3-conclusion"></span></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <strong id="activity4-title"></strong>
+                        <ul class="mt-2">
+                            <li><strong>문제:</strong> <span id="activity4-problem"></span></li>
+                            <li><strong>재시도:</strong> <span id="activity4-retry"></span></li>
+                            <li><strong>결과:</strong> <span id="activity4-result"></span></li>
+                            <li><strong>결론:</strong> <span id="activity4-conclusion"></span></li>
+                        </ul>
+                    </li>
+                </ol>
+
+                <h4>프로젝트 핵심 성과</h4>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 my-6">
+                    <div class="stat-card">
+                        <div class="stat-value" id="stat1-value"></div>
+                        <div class="stat-label" id="stat1-label"></div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="stat2-value"></div>
+                        <div class="stat-label" id="stat2-label"></div>
+                    </div>
+                </div>
+                <ul>
+                    <li><strong id="achievement1-title"></strong>: <span id="achievement1-content"></span></li>
+                    <li><strong id="achievement2-title"></strong>:
+                        <ul class="list-disc list-inside ml-4 mt-1">
+                            <li><strong id="achievement2-item1-subtitle"></strong>: <span id="achievement2-item1-content"></span></li>
+                            <li><strong id="achievement2-item2-subtitle"></strong>: <span id="achievement2-item2-content"></span></li>
+                        </ul>
+                    </li>
+                </ul>
+            </section>
+            
+            <section id="content-2" class="project-content hidden">
+                <h2 id="project2-title"></h2>
+                <h3 id="project2-subtitle"></h3>
+                
+                <p class="text-sm text-slate-500 mb-4">
+                    <span class="font-medium">프로젝트 기간:</span> <span id="project2-period"></span>
+                </p>
+
+                <h4>사용 기술 스택</h4>
+                <div id="project2-techstack"></div>
+
+                <h4>주요 구현 내용 (3-Parts)</h4>
+                <ol class="project-section-list list-decimal list-inside text-slate-700 space-y-4">
+                    <li>
+                        <div class="part-title" id="part1-title"></div>
+                        <div class="part-desc" id="part1-desc"></div>
+                        <ul class="list-disc list-inside ml-4" id="part1-items"></ul>
+                    </li>
+                    <li>
+                        <div class="part-title" id="part2-title"></div>
+                        <div class="part-desc" id="part2-desc"></div>
+                        <ul class="list-disc list-inside ml-4">
+                            <li><strong id="part2-rdt-title"></strong>:
+                                <ul class="list-disc list-inside ml-6 mt-1">
+                                    <li><strong id="rdt1-subtitle"></strong>: <span id="rdt1-content"></span></li>
+                                    <li><strong id="rdt2-subtitle"></strong>: <span id="rdt2-content"></span></li>
+                                    <li><strong id="rdt3-subtitle"></strong>: <span id="rdt3-content"></span></li>
+                                </ul>
+                            </li>
+                            <li><strong>결과:</strong> <span id="part2-result"></span></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <div class="part-title" id="part3-title"></div>
+                        <div class="part-desc" id="part3-desc"></div>
+                        <ul class="list-disc list-inside ml-4">
+                            <li><strong>ARP 스캐너:</strong> <span id="part3-arp"></span></li>
+                            <li><strong id="part3-mobility-title"></strong>:
+                                <ul class="list-disc list-inside ml-6 mt-1">
+                                    <li><strong id="mobility1-case"></strong>: <span id="mobility1-content"></span></li>
+                                    <li><strong id="mobility2-case"></strong>: <span id="mobility2-content"></span></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                </ol>
+
+                <h4>문제 해결 및 성과</h4>
+                <ul>
+                    <li><strong>[문제]</strong>: <span id="project2-problem"></span></li>
+                    <li><strong>[해결]</strong>: <span id="project2-solution"></span></li>
+                    <li><strong>[성과]</strong>: <span id="project2-achievement"></span></li>
+                </ul>
+            </section>
+
+            <section id="content-3" class="project-content hidden">
+                <h2 id="project3-title"></h2>
+                <h3 id="project3-subtitle"></h3>
+                
+                <p class="text-sm text-slate-500 mb-4">
+                    <span class="font-medium">프로젝트 기간:</span> <span id="project3-period"></span>
+                </p>
+
+                <h4>사용 기술</h4>
+                <div id="project3-techstack"></div>
+
+                <h4>주요 구현 내용</h4>
+                <ul>
+                    <li><strong id="impl1-title"></strong>: <span id="impl1-content"></span></li>
+                    <li><strong id="impl2-title"></strong>: <span id="impl2-content"></span></li>
+                    <li><strong id="impl3-title"></strong>: <span id="impl3-content"></span></li>
+                    <li><strong id="impl4-title"></strong>: <span id="impl4-content"></span></li>
+                </ul>
+
+                <h4>문제 해결 및 성과</h4>
+                <ul>
+                    <li><strong>[문제]</strong>: <span id="project3-problem"></span></li>
+                    <li><strong>[해결]</strong>: <span id="project3-solution"></span></li>
+                    <li><strong>[성과]</strong>: <span id="project3-achievement"></span></li>
+                </ul>
+
+                <h4>AI 시대와 Prolog에 대한 고찰</h4>
+                <div class="reflection-box">
+                    <h5 id="reflection1-title"></h5>
+                    <p class="mb-3" id="reflection1-content"></p>
+
+                    <h5 id="reflection2-title"></h5>
+                    <p class="mb-3" id="reflection2-intro"></p>
+                    <ul class="list-disc list-inside mb-3 space-y-2">
+                        <li><strong id="aitype1-type"></strong>: <span id="aitype1-desc"></span></li>
+                        <li><strong id="aitype2-type"></strong>: <span id="aitype2-desc"></span></li>
+                    </ul>
+                    <p class="mb-3" id="reflection2-combined"></p>
+                    
+                    <h5 id="reflection3-title"></h5>
+                    <ul class="list-disc list-inside space-y-2">
+                        <li><strong id="role1-title"></strong>: <span id="role1-desc"></span></li>
+                        <li><strong id="role2-title"></strong>: <span id="role2-desc"></span></li>
+                        <li><strong id="role3-title"></strong>: <span id="role3-desc"></span></li>
+                    </ul>
+                    <p class="mt-4 font-medium" id="reflection-conclusion"></p>
+                </div>
+            </section>
         </main>
     </div>
 
