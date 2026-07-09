@@ -18,7 +18,6 @@ const TOGGLE_CONFIGS = [
     { buttonId: 'toggle-part1-img', containerId: 'part1-img-container', key: 'part1' },
     { buttonId: 'toggle-part2-img', containerId: 'part2-img-container', key: 'part2' },
     { buttonId: 'toggle-p3-platform-img', containerId: 'p3-platform-img-container', key: 'p3platform' },
-    { buttonId: 'toggle-p3-schema-img', containerId: 'p3-schema-img-container', key: 'p3schema' },
     { buttonId: 'toggle-p3-frontend-img', containerId: 'p3-frontend-img-container', key: 'p3frontend' },
     { buttonId: 'toggle-p3-security-img', containerId: 'p3-security-img-container', key: 'p3security' },
     { buttonId: 'toggle-p3-usage-img', containerId: 'p3-usage-img-container', key: 'p3usage' }
@@ -275,6 +274,16 @@ function loadProject3(project) {
         }
         document.getElementById(`p3-phase${n}-conclusion`).textContent = phase.conclusion;
     });
+
+    const phase2 = project.phases[1];
+    if (phase2.contextNote) {
+        document.getElementById('p3-phase2-context').textContent = phase2.contextNote;
+    }
+    if (phase2.example) {
+        document.getElementById('p3-phase2-example-caption').textContent = phase2.example.caption;
+        document.getElementById('p3-phase2-example-before').textContent = phase2.example.before;
+        document.getElementById('p3-phase2-example-after').textContent = phase2.example.after;
+    }
 
     document.getElementById('p3-phasestat1-value').textContent = project.phaseStats[0].value;
     document.getElementById('p3-phasestat1-label').textContent = project.phaseStats[0].label;

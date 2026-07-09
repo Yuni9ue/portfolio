@@ -216,7 +216,13 @@
             "ブロックのパラメータ値自体がプロンプトに含まれていないため、パラメータ変更コマンドを処理できない問題",
             "これらの限界を解決しようと情報を追加すると、プロンプトが再び長くなるという矛盾"
           ],
-          "conclusion": "この膨大なデータを常にすべて入れるのではなく、On-demandで必要な時だけプロンプトに入れよう。"
+          "conclusion": "この膨大なデータを常にすべて入れるのではなく、On-demandで必要な時だけプロンプトに入れよう。",
+          "contextNote": "例えば、あるブロックの元の説明は「Calculate Grasping Point Block uses the vision system to detect objects and calculate their grasping point. The computed grasping point is stored in a variable...」のように複数の文にわたっており、パラメータ辞書にもconfidence_threshold、roi、snapshot_id_variableのようにその作業とは無関係な項目まで常に一緒に含まれていました。50個のブロック分の説明とパラメータをすべて合わせると、プロンプト一つだけで数千トークンに達していたのです。",
+          "example": {
+            "caption": "例 — 現在のシーケンス表現方式の変化",
+            "before": "{\n  \"nodes\": [\n    { \"id\": \"n1\", \"type\": \"wait_block\",\n      \"position\": {\"x\":120,\"y\":40},\n      \"parameters\": {\"seconds\":1},\n      \"outputs\": {\"success\":\"n2\"} },\n    { \"id\": \"n2\", \"type\": \"wait_block\",\n      \"position\": {\"x\":120,\"y\":140},\n      \"parameters\": {\"seconds\":2},\n      \"outputs\": {\"success\":\"n3\"} },\n    { \"id\": \"n3\", \"type\": \"wait_block\",\n      \"position\": {\"x\":120,\"y\":240},\n      \"parameters\": {\"seconds\":3},\n      \"outputs\": {\"success\":\"n4\"} }\n  ]\n}",
+            "after": "<CurrentSequence>\n- Wait 1s\n- Wait 2s\n- Wait 3s\n- Wait 4s\n- Wait 5s\n</CurrentSequence>"
+          }
         },
         {
           "label": "Phase 3",

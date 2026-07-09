@@ -280,17 +280,16 @@
                             </li>
                             <li><strong data-i18n="p3.label.gotConclusion">얻은 결론:</strong> <span id="p3-phase2-conclusion"></span></li>
                         </ul>
-                        <button id="toggle-p3-schema-img" class="toggle-btn mt-3">방대한 블록·파라미터 데이터 보기</button>
-                        <div id="p3-schema-img-container" class="image-container hidden">
-                            <div class="image-grid">
-                                <div class="image-item">
-                                    <h6 class="image-title" data-i18n="p3.image.blockSchema">블록 스키마 (BlockList)</h6>
-                                    <img src="images/p3_images/block_schema.png" alt="블록 스키마" class="project-image">
-                                </div>
-                                <div class="image-item">
-                                    <h6 class="image-title" data-i18n="p3.image.paramDict">파라미터 사전 (ParameterDict)</h6>
-                                    <img src="images/p3_images/param_dict.png" alt="파라미터 사전" class="project-image">
-                                </div>
+                        <p class="text-sm text-slate-600 mt-3" id="p3-phase2-context"></p>
+                        <p class="text-sm font-semibold text-slate-700 mt-4 mb-1" id="p3-phase2-example-caption"></p>
+                        <div class="code-example">
+                            <div class="code-block before">
+                                <div class="code-block-label" data-i18n="p3.code.before">Before</div>
+                                <pre id="p3-phase2-example-before"></pre>
+                            </div>
+                            <div class="code-block after">
+                                <div class="code-block-label" data-i18n="p3.code.after">After</div>
+                                <pre id="p3-phase2-example-after"></pre>
                             </div>
                         </div>
                     </li>
@@ -318,46 +317,55 @@
                     </li>
                 </ol>
 
-                <h4 data-i18n="p3.heading.architecture">아키텍처 — Judge-Worker 2단계 파이프라인</h4>
-                <p class="text-slate-700 mb-3" id="p3-arch-intro"></p>
-                <ol class="list-decimal list-inside text-slate-700 space-y-2 mb-4" id="p3-arch-steps"></ol>
-                <p class="font-medium text-slate-800 mb-1" data-i18n="p3.label.designPrinciples">핵심 설계 원칙</p>
-                <ul class="list-disc list-inside ml-4 text-slate-700 mb-4" id="p3-arch-principles"></ul>
+                <div class="tech-part-card backend">
+                    <span class="tech-part-badge">BACKEND</span>
+                    <h4 data-i18n="p3.heading.architecture">아키텍처 — Judge-Worker 2단계 파이프라인</h4>
+                    <p class="text-slate-700 mb-3" id="p3-arch-intro"></p>
+                    <ol class="list-decimal list-inside text-slate-700 space-y-2 mb-4" id="p3-arch-steps"></ol>
+                    <p class="font-medium text-slate-800 mb-1" data-i18n="p3.label.designPrinciples">핵심 설계 원칙</p>
+                    <ul class="list-disc list-inside ml-4 text-slate-700" id="p3-arch-principles"></ul>
+                </div>
 
-                <h4 data-i18n="p3.heading.frontend">프론트엔드 — 사용자 제어권 보장</h4>
-                <p class="text-slate-700 mb-3" id="p3-frontend-intro"></p>
-                <ul class="list-disc list-inside ml-4 text-slate-700 space-y-2 mb-3">
-                    <li><strong id="p3-frontend1-title"></strong>: <span id="p3-frontend1-content"></span></li>
-                    <li><strong id="p3-frontend2-title"></strong>: <span id="p3-frontend2-content"></span></li>
-                    <li><strong id="p3-frontend3-title"></strong>: <span id="p3-frontend3-content"></span></li>
-                </ul>
-                <p class="text-sm text-slate-500 mb-3"><span data-i18n="p3.label.techStackPrefix">기술 스택:</span> <span id="p3-frontend-technote"></span></p>
-                <button id="toggle-p3-frontend-img" class="toggle-btn mt-3">Diff 비교 화면 보기</button>
-                <div id="p3-frontend-img-container" class="image-container hidden">
-                    <div class="image-grid">
-                        <div class="image-item">
-                            <h6 class="image-title" data-i18n="p3.image.diffModal">시퀀스 변경사항 비교 모달</h6>
-                            <img src="images/p3_images/diff_modal.png" alt="시퀀스 변경사항 비교 모달" class="project-image">
-                        </div>
-                        <div class="image-item">
-                            <h6 class="image-title" data-i18n="p3.image.diffUi">변경점 색상 표시 / 사이드바 연동</h6>
-                            <img src="images/p3_images/diff_ui.png" alt="변경점 색상 표시" class="project-image">
+                <div class="tech-part-card frontend">
+                    <span class="tech-part-badge">FRONTEND</span>
+                    <h4 data-i18n="p3.heading.frontend">프론트엔드 — 사용자 제어권 보장</h4>
+                    <p class="text-slate-700 mb-3" id="p3-frontend-intro"></p>
+                    <ul class="list-disc list-inside ml-4 text-slate-700 space-y-2 mb-3">
+                        <li><strong id="p3-frontend1-title"></strong>: <span id="p3-frontend1-content"></span></li>
+                        <li><strong id="p3-frontend2-title"></strong>: <span id="p3-frontend2-content"></span></li>
+                        <li><strong id="p3-frontend3-title"></strong>: <span id="p3-frontend3-content"></span></li>
+                    </ul>
+                    <p class="text-sm text-slate-500 mb-3"><span data-i18n="p3.label.techStackPrefix">기술 스택:</span> <span id="p3-frontend-technote"></span></p>
+                    <button id="toggle-p3-frontend-img" class="toggle-btn mt-3">Diff 비교 화면 보기</button>
+                    <div id="p3-frontend-img-container" class="image-container hidden">
+                        <div class="image-grid">
+                            <div class="image-item">
+                                <h6 class="image-title" data-i18n="p3.image.diffModal">시퀀스 변경사항 비교 모달</h6>
+                                <img src="images/p3_images/diff_modal.png" alt="시퀀스 변경사항 비교 모달" class="project-image">
+                            </div>
+                            <div class="image-item">
+                                <h6 class="image-title" data-i18n="p3.image.diffUi">변경점 색상 표시 / 사이드바 연동</h6>
+                                <img src="images/p3_images/diff_ui.png" alt="변경점 색상 표시" class="project-image">
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                <h4 data-i18n="p3.heading.security">보안 처리</h4>
-                <p class="text-slate-700 mb-3" id="p3-security-intro"></p>
-                <ul class="list-disc list-inside ml-4 text-slate-700 space-y-2 mb-3">
-                    <li><strong id="p3-security1-title"></strong>: <span id="p3-security1-content"></span></li>
-                    <li><strong id="p3-security2-title"></strong>: <span id="p3-security2-content"></span></li>
-                    <li><strong id="p3-security3-title"></strong>: <span id="p3-security3-content"></span></li>
-                </ul>
-                <button id="toggle-p3-security-img" class="toggle-btn mt-3">API Key 관리 화면 보기</button>
-                <div id="p3-security-img-container" class="image-container hidden">
-                    <div class="image-item">
-                        <h6 class="image-title" data-i18n="p3.image.securityAdmin">고객사별 API Key 관리 페이지</h6>
-                        <img src="images/p3_images/security_admin.png" alt="고객사별 API Key 관리 페이지" class="project-image">
+                <div class="tech-part-card security">
+                    <span class="tech-part-badge">SECURITY</span>
+                    <h4 data-i18n="p3.heading.security">보안 처리</h4>
+                    <p class="text-slate-700 mb-3" id="p3-security-intro"></p>
+                    <ul class="list-disc list-inside ml-4 text-slate-700 space-y-2 mb-3">
+                        <li><strong id="p3-security1-title"></strong>: <span id="p3-security1-content"></span></li>
+                        <li><strong id="p3-security2-title"></strong>: <span id="p3-security2-content"></span></li>
+                        <li><strong id="p3-security3-title"></strong>: <span id="p3-security3-content"></span></li>
+                    </ul>
+                    <button id="toggle-p3-security-img" class="toggle-btn mt-3">API Key 관리 화면 보기</button>
+                    <div id="p3-security-img-container" class="image-container hidden">
+                        <div class="image-item">
+                            <h6 class="image-title" data-i18n="p3.image.securityAdmin">고객사별 API Key 관리 페이지</h6>
+                            <img src="images/p3_images/security_admin.png" alt="고객사별 API Key 관리 페이지" class="project-image">
+                        </div>
                     </div>
                 </div>
 

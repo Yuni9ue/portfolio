@@ -216,7 +216,13 @@
             "Since block parameter values themselves weren't in the prompt, parameter-change commands couldn't be handled",
             "The contradiction that adding information to solve these limitations made the prompt long again"
           ],
-          "conclusion": "Instead of always including all this data, let's load it into the prompt on demand, only when actually needed."
+          "conclusion": "Instead of always including all this data, let's load it into the prompt on demand, only when actually needed.",
+          "contextNote": "For instance, a single block's original description read like \"Calculate Grasping Point Block uses the vision system to detect objects and calculate their grasping point. The computed grasping point is stored in a variable...\" spanning multiple sentences, and the parameter dictionary always carried entries irrelevant to the task at hand, like confidence_threshold, roi, and snapshot_id_variable. Multiply that by the descriptions and parameters of all 50 blocks, and a single prompt alone could easily run into the thousands of tokens.",
+          "example": {
+            "caption": "Example — How the current-sequence representation changed",
+            "before": "{\n  \"nodes\": [\n    { \"id\": \"n1\", \"type\": \"wait_block\",\n      \"position\": {\"x\":120,\"y\":40},\n      \"parameters\": {\"seconds\":1},\n      \"outputs\": {\"success\":\"n2\"} },\n    { \"id\": \"n2\", \"type\": \"wait_block\",\n      \"position\": {\"x\":120,\"y\":140},\n      \"parameters\": {\"seconds\":2},\n      \"outputs\": {\"success\":\"n3\"} },\n    { \"id\": \"n3\", \"type\": \"wait_block\",\n      \"position\": {\"x\":120,\"y\":240},\n      \"parameters\": {\"seconds\":3},\n      \"outputs\": {\"success\":\"n4\"} }\n  ]\n}",
+            "after": "<CurrentSequence>\n- Wait 1s\n- Wait 2s\n- Wait 3s\n- Wait 4s\n- Wait 5s\n</CurrentSequence>"
+          }
         },
         {
           "label": "Phase 3",
