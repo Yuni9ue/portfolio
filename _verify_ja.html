@@ -405,6 +405,14 @@
 
     <script src="i18n.js"></script>
     <script src="script.js"></script>
+    <script>
+      window.addEventListener('load', () => {
+        setTimeout(() => {
+          document.querySelector('.lang-btn[data-lang="ja"]').click();
+          setTimeout(() => { document.getElementById('tab-btn-3').click(); }, 200);
+        }, 300);
+      });
+    </script>
 
 </body>
 </html>

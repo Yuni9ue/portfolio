@@ -1,20 +1,84 @@
 let projectsData = null;
+let currentLang = localStorage.getItem('lang') || 'ko';
+let currentTab = 1;
+
+const PROJECT_FILES = {
+    ko: 'projects.json',
+    en: 'projects.en.json',
+    ja: 'projects.ja.json'
+};
+
+const projectsCache = {};
+
+const TOGGLE_CONFIGS = [
+    { buttonId: 'toggle-cassandra-img', containerId: 'cassandra-img-container', key: 'cassandra' },
+    { buttonId: 'toggle-mongodb-img', containerId: 'mongodb-img-container', key: 'mongodb' },
+    { buttonId: 'toggle-mysql-img', containerId: 'mysql-img-container', key: 'mysql' },
+    { buttonId: 'toggle-rdbms-img', containerId: 'rdbms-img-container', key: 'rdbms' },
+    { buttonId: 'toggle-part1-img', containerId: 'part1-img-container', key: 'part1' },
+    { buttonId: 'toggle-part2-img', containerId: 'part2-img-container', key: 'part2' },
+    { buttonId: 'toggle-p3-platform-img', containerId: 'p3-platform-img-container', key: 'p3platform' },
+    { buttonId: 'toggle-p3-schema-img', containerId: 'p3-schema-img-container', key: 'p3schema' },
+    { buttonId: 'toggle-p3-frontend-img', containerId: 'p3-frontend-img-container', key: 'p3frontend' },
+    { buttonId: 'toggle-p3-security-img', containerId: 'p3-security-img-container', key: 'p3security' },
+    { buttonId: 'toggle-p3-usage-img', containerId: 'p3-usage-img-container', key: 'p3usage' }
+];
 
 document.addEventListener('DOMContentLoaded', async () => {
-    await loadProjects();
+    setupLanguageSwitcher();
+    applyStaticUIStrings(currentLang);
+    await loadProjects(currentLang);
     loadProject(1);
     setupTabs();
     setupAllImageToggles();
 });
 
-async function loadProjects() {
+async function loadProjects(lang) {
+    if (projectsCache[lang]) {
+        projectsData = projectsCache[lang];
+        return;
+    }
     try {
-        const response = await fetch('projects.json');
+        const response = await fetch(PROJECT_FILES[lang]);
         const data = await response.json();
+        projectsCache[lang] = data.projects;
         projectsData = data.projects;
     } catch (error) {
         console.error('프로젝트 데이터를 불러오는데 실패했습니다:', error);
     }
+}
+
+function applyStaticUIStrings(lang) {
+    document.documentElement.lang = lang;
+    document.title = UI_STRINGS[lang]['page.title'];
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        const text = UI_STRINGS[lang][key];
+        if (text !== undefined) el.textContent = text;
+    });
+}
+
+function setupLanguageSwitcher() {
+    document.querySelectorAll('.lang-btn').forEach(btn => {
+        btn.addEventListener('click', () => switchLanguage(btn.getAttribute('data-lang')));
+    });
+    updateLangSwitcherUI();
+}
+
+function updateLangSwitcherUI() {
+    document.querySelectorAll('.lang-btn').forEach(btn => {
+        btn.classList.toggle('active-lang', btn.getAttribute('data-lang') === currentLang);
+    });
+}
+
+async function switchLanguage(lang) {
+    if (lang === currentLang || !PROJECT_FILES[lang]) return;
+    currentLang = lang;
+    localStorage.setItem('lang', lang);
+    updateLangSwitcherUI();
+    applyStaticUIStrings(lang);
+    await loadProjects(lang);
+    loadProject(currentTab);
 }
 
 function setupTabs() {
@@ -24,6 +88,7 @@ function setupTabs() {
     tabs.forEach(tab => {
         tab.addEventListener('click', () => {
             const tabId = parseInt(tab.getAttribute('data-tab'));
+            currentTab = tabId;
 
             tabs.forEach(t => t.classList.remove('active-tab'));
             tab.classList.add('active-tab');
@@ -106,57 +171,32 @@ function loadProject1(project) {
 }
 
 function setupAllImageToggles() {
-    setupImageToggle('toggle-cassandra-img', 'cassandra-img-container', '그래프 보기', '그래프 숨기기');
-    setupImageToggle('toggle-mongodb-img', 'mongodb-img-container', '스키마 비교 보기', '스키마 비교 숨기기');
-    setupImageToggle('toggle-mysql-img', 'mysql-img-container', '그래프 보기', '그래프 숨기기');
-    setupImageToggle('toggle-rdbms-img', 'rdbms-img-container', '그래프 보기', '그래프 숨기기');
-    setupImageToggle('toggle-part1-img', 'part1-img-container', '구현 사진 보기', '구현 사진 숨기기');
-    setupImageToggle('toggle-part2-img', 'part2-img-container', '구현 사진 보기', '구현 사진 숨기기');
-    setupImageToggle('toggle-p3-platform-img', 'p3-platform-img-container', '플랫폼 화면 보기', '플랫폼 화면 숨기기');
-    setupImageToggle('toggle-p3-schema-img', 'p3-schema-img-container', '방대한 블록·파라미터 데이터 보기', '방대한 블록·파라미터 데이터 숨기기');
-    setupImageToggle('toggle-p3-frontend-img', 'p3-frontend-img-container', 'Diff 비교 화면 보기', 'Diff 비교 화면 숨기기');
-    setupImageToggle('toggle-p3-security-img', 'p3-security-img-container', 'API Key 관리 화면 보기', 'API Key 관리 화면 숨기기');
-    setupImageToggle('toggle-p3-usage-img', 'p3-usage-img-container', '실행 화면 보기', '실행 화면 숨기기');
+    TOGGLE_CONFIGS.forEach(config => {
+        setupImageToggle(config.buttonId, config.containerId, config.key);
+    });
 }
 
 function resetAllImageToggles() {
-    const toggleConfigs = [
-        { buttonId: 'toggle-cassandra-img', containerId: 'cassandra-img-container', showText: '그래프 보기' },
-        { buttonId: 'toggle-mongodb-img', containerId: 'mongodb-img-container', showText: '스키마 비교 보기' },
-        { buttonId: 'toggle-mysql-img', containerId: 'mysql-img-container', showText: '그래프 보기' },
-        { buttonId: 'toggle-rdbms-img', containerId: 'rdbms-img-container', showText: '그래프 보기' },
-        { buttonId: 'toggle-part1-img', containerId: 'part1-img-container', showText: '구현 사진 보기' },
-        { buttonId: 'toggle-part2-img', containerId: 'part2-img-container', showText: '구현 사진 보기' },
-        { buttonId: 'toggle-p3-platform-img', containerId: 'p3-platform-img-container', showText: '플랫폼 화면 보기' },
-        { buttonId: 'toggle-p3-schema-img', containerId: 'p3-schema-img-container', showText: '방대한 블록·파라미터 데이터 보기' },
-        { buttonId: 'toggle-p3-frontend-img', containerId: 'p3-frontend-img-container', showText: 'Diff 비교 화면 보기' },
-        { buttonId: 'toggle-p3-security-img', containerId: 'p3-security-img-container', showText: 'API Key 관리 화면 보기' },
-        { buttonId: 'toggle-p3-usage-img', containerId: 'p3-usage-img-container', showText: '실행 화면 보기' }
-    ];
-
-    toggleConfigs.forEach(config => {
+    TOGGLE_CONFIGS.forEach(config => {
         const button = document.getElementById(config.buttonId);
         const container = document.getElementById(config.containerId);
-        
+
         if (button && container) {
             container.classList.add('hidden');
-            button.textContent = config.showText;
+            button.textContent = UI_STRINGS[currentLang].toggles[config.key].show;
         }
     });
 }
 
-function setupImageToggle(buttonId, containerId, showText, hideText) {
+function setupImageToggle(buttonId, containerId, key) {
     const button = document.getElementById(buttonId);
     const container = document.getElementById(containerId);
-    
+
     if (button && container) {
         button.addEventListener('click', () => {
             container.classList.toggle('hidden');
-            if (container.classList.contains('hidden')) {
-                button.textContent = showText;
-            } else {
-                button.textContent = hideText;
-            }
+            const texts = UI_STRINGS[currentLang].toggles[key];
+            button.textContent = container.classList.contains('hidden') ? texts.show : texts.hide;
         });
     }
 }

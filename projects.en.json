@@ -1,0 +1,350 @@
+{
+  "projects": [
+    {
+      "id": 1,
+      "title": "Database Performance Evaluation Using the TPC-H Benchmark",
+      "subtitle": "A team project that generated 100GB of TPC-H benchmark data to compare and analyze the performance of RDBMS and NoSQL database systems, and went on to attempt performance improvements.",
+      "period": "Sep 2024 – Dec 2024 (Team Project)",
+      "techStack": [
+        "PostgreSQL",
+        "MySQL",
+        "Cassandra",
+        "MongoDB",
+        "AWS EC2",
+        "Ubuntu OS"
+      ],
+      "activities": [
+        {
+          "title": "Infrastructure Setup & Scaling (AWS EC2)",
+          "problem": "Processing 100GB of data on the initial single EC2 instance (t3a.xlarge) environment ran into a shortage of compute resources.",
+          "solution": "We scaled out to 4 EC2 instances and upgraded instance specs to c5.4xlarge and similar tiers, building a stable test environment."
+        },
+        {
+          "title": "Building a Cassandra Multi-Node Cluster and Evaluating Performance vs. Single-Node",
+          "goal": "To empirically analyze the performance gains from Cassandra's scalability, we built a 4-node Cassandra cluster.",
+          "process": [
+            "Opened the client port (9042) and inter-node communication port (7000) in the AWS security group.",
+            "Configured the cluster by specifying the seed node IP and setting the 'listen_address' for inter-node communication.",
+            "Used the 'nodetool status' command to verify that all 4 nodes were connected normally."
+          ],
+          "performance": "We measured and compared query processing times in the Single-Node setup versus the Multi-Node setup.",
+          "result": "Compared to Single-node, Multi-node reduced total query execution time by 67.95%."
+        },
+        {
+          "title": "MongoDB Performance Issue Analysis & Schema Redesign",
+          "problem": "Running complex TPC-H queries in the MongoDB environment triggered 'broken pipe' and 'MaxTimeMSExpired' (exceeding 4+ hours) errors, causing query failures.",
+          "hypothesis": "We diagnosed the cause as loading the normalized SQL schema directly into MongoDB as-is, which triggered excessive '$lookup' operations (MongoDB's equivalent of SQL JOIN) during query execution.",
+          "attempt": "To optimize for MongoDB's document model, we redesigned the data into a denormalized schema that embeds 'nation' and 'region' information inside 'supplier'.",
+          "conclusion": "Even after improving the schema, query timeouts recurred, leading us to conclude that TPC-H's complex relational join queries are not well suited to MongoDB's Aggregation Framework."
+        },
+        {
+          "title": "MySQL Performance Tuning",
+          "problem": "Loading 100GB of data and running queries caused instability issues such as server crashes, and our initial tuning attempt (adjusting the buffer pool) did not produce meaningful results.",
+          "retry": "We reconfigured the environment with a 10GB dataset and tested performance by varying the buffer pool size across 1GB, 26GB, and 29GB.",
+          "result": "Increasing the buffer pool size from 1GB to 26/29GB reduced the execution time of queries that trigger heavy disk I/O (Q17, Q20) to roughly 1/3 and 1/4 of the original, respectively.",
+          "conclusion": "We confirmed that securing sufficient buffer pool memory to reduce disk I/O is key to improving performance when processing large-scale data."
+        }
+      ],
+      "stats": [
+        {
+          "value": "67.95%",
+          "label": "Cassandra Multi-Node Query Time Reduction"
+        },
+        {
+          "value": "Up to 4×",
+          "label": "MySQL Tuning (Buffer Pool) Performance Gain"
+        }
+      ],
+      "achievements": [
+        {
+          "title": "Proven Cassandra Scalability",
+          "content": "The Cassandra Multi-node (4-node) configuration reduced total query execution time by 67.95% compared to Single-node, clearly demonstrating the efficiency of parallel processing and distributed architecture."
+        },
+        {
+          "title": "MySQL Performance Improvement",
+          "content": "Increasing the buffer pool size from 1GB to 26/29GB cut the execution time of disk-I/O-heavy queries by up to 4×, confirming that securing sufficient memory is key to performance when processing large-scale data."
+        },
+        {
+          "title": "RDBMS vs. NoSQL Characteristics Comparison",
+          "items": [
+            {
+              "subtitle": "RDBMS (PostgreSQL, MySQL)",
+              "content": "Showed strength in executing TPC-H's complex join and aggregation queries."
+            },
+            {
+              "subtitle": "NoSQL (Cassandra, MongoDB)",
+              "content": "Cassandra showed strength in parallel processing across a distributed environment and in certain filtering/aggregation queries, while MongoDB showed its limits by failing to execute complex relational queries."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "title": "TCP/UDP-Based Network Application",
+      "subtitle": "A project that used TCP/UDP to implement and verify everything from basic chat to reliable file transfer, and also built a network scanner feature to deepen our understanding of networking.",
+      "period": "Sep 2024 – Dec 2024 (Team Project)",
+      "techStack": [
+        "Python",
+        "TCP",
+        "UDP",
+        "WireShark"
+      ],
+      "parts": [
+        {
+          "title": "Basic Socket Chat Program Implementation",
+          "desc": "We understood the basics of TCP/UDP socket programming and implemented a simple client-server chat GUI program.",
+          "items": [
+            "Used the 'socket' library to create and connect TCP server/client and UDP server/client sockets respectively.",
+            "Implemented bidirectional text messaging over both TCP and UDP protocols."
+          ]
+        },
+        {
+          "title": "Reliable File Transfer Implementation (RDT)",
+          "desc": "We added file transfer functionality to the Part 1 chat program, and directly implemented an RDT (Reliable Data Transfer) protocol specifically to overcome UDP's unreliability.",
+          "rdtTitle": "Process",
+          "rdtItems": [
+            {
+              "subtitle": "Sliding Window (GBN/SR)",
+              "content": "Implemented a sliding window mechanism that manages ACK numbers and packet sequence numbers."
+            },
+            {
+              "subtitle": "Timeout & Retransmission",
+              "content": "Checked ACK reception timing and retransmitted the corresponding packet on timeout to prevent data loss."
+            },
+            {
+              "subtitle": "Packet Buffering",
+              "content": "On the receiving side, out-of-order packets are temporarily stored in a buffer, and once consecutive packets arrive, they are written to the file in sequence."
+            }
+          ],
+          "result": "We successfully transferred image and text files over both TCP and UDP protocols and confirmed they were saved in the recipient's folder."
+        },
+        {
+          "title": "ARP Scanner & Mobility Analysis",
+          "desc": "We implemented an ARP scanner using the scapy library and analyzed how IP addresses and the ARP table change when moving between network environments.",
+          "arpScanner": "Sent ARP Request packets to a specified IP range and analyzed the received ARP Replies to obtain a list of IP and MAC addresses for active devices on the local network.",
+          "mobilityTitle": "Mobility Analysis",
+          "mobilityItems": [
+            {
+              "case": "Case 1 (Same Location)",
+              "content": "When reconnecting to the same AP, the IP address did not change, and only ARP requests reconfirming the existing IP–MAC mapping were observed."
+            },
+            {
+              "case": "Case 2 (Location Change)",
+              "content": "Moving to a different AP triggered a new IP address assignment via DHCP, and we confirmed a new ARP request was sent to locate the new network's gateway."
+            }
+          ]
+        }
+      ],
+      "summary": {
+        "implementations": [
+          "Implemented a bidirectional chat program using TCP/UDP socket programming",
+          "Implemented a reliable file transfer (RDT) protocol using ACK, timeout, and sliding window in a UDP environment",
+          "Implemented an ARP scanner and analyzed IP/MAC address changes when moving between network environments"
+        ],
+        "achievement": "By directly implementing reliability and flow control for network protocols, we improved our ability to apply core CS knowledge in practice."
+      }
+    },
+    {
+      "id": 3,
+      "title": "AiVot Platform — Block Sequence Agent Service",
+      "subtitle": "A project to develop an intelligent agent that automatically generates and edits robot/vision control sequences from natural language commands. Rather than simply bolting an LLM onto the product, the core challenge was to control it as a genuine product feature — securing output stability, response speed, and user control to reach a level usable in real industrial settings.",
+      "period": "Jan 2026 – Feb 2026 (AIVeX Internship, Individual Project)",
+      "techStack": [
+        "Python",
+        "FastAPI",
+        "Google Gemini API",
+        "React 18",
+        "TypeScript",
+        "ReactFlow",
+        "Pydantic"
+      ],
+      "background": {
+        "intro": "AiVot is automation software that uses block-based sequence programs to control multi-joint robots and vision systems. Users design work sequences by combining various function blocks — camera capture, vision processing, robot movement, I/O control, and more. However, the very process of having field operators design these sequences by hand had become a bottleneck for productivity.",
+        "problems": [
+          {
+            "title": "It takes too long",
+            "content": "Simply placing and connecting blocks one by one took tens of minutes for a single complex sequence."
+          },
+          {
+            "title": "The barrier to entry is high",
+            "content": "With a total of 50 different blocks, figuring out which order to combine them in was difficult to even begin without domain knowledge."
+          },
+          {
+            "title": "Edits break the sequence",
+            "content": "Modifying an existing sequence required re-understanding the entire structure, and touching even a single block incorrectly would break the connection logic — all you'd get was a warning dialog."
+          }
+        ]
+      },
+      "phases": [
+        {
+          "label": "Phase 1",
+          "title": "Verify Accuracy First — Single-Prompt-Based Prompt Engineering",
+          "approach": [
+            "Processed the entire block schema, parameter definitions, and current sequence in a single large prompt via one API call",
+            "Applied a Chain-of-Thought structure so the LLM would reason through the sequence step by step",
+            "Designed a system prompt that enforced JSON output format and included Few-shot examples covering various scenarios",
+            "Established a rule system that explicitly documented design principles such as block connection rules and forbidden patterns"
+          ],
+          "achieved": [
+            "Verified that the LLM accurately understood block structures and connection relationships",
+            "Confirmed baseline accuracy for sequence generation and editing",
+            "Established a design-principle and forbidden-rule system that would be reused across every subsequent phase"
+          ],
+          "limitation": [
+            "Average response time exceeded 60 seconds — unusable for production",
+            "Input tokens per request exceeded 12,000+, causing costs to spike",
+            "The single large-prompt structure made it structurally impossible to solve both speed and cost simultaneously"
+          ],
+          "conclusion": "No amount of refining the prompt content would solve the speed/cost problem. We needed to shift toward reducing the data packed into the prompt itself."
+        },
+        {
+          "label": "Phase 2",
+          "title": "Reduce the Data Fed Into the Prompt — Three Context Optimizations",
+          "approach": [
+            "Lightened block metadata: instead of the full block schema, passed only the type name and description of the needed blocks (saving roughly 4,500 tokens)",
+            "Built a parameter dictionary: separated parameters that were redundantly defined per block into a standalone dictionary (name–description) (saving roughly 3,000 tokens)",
+            "Simplified the current-sequence representation: instead of the full node JSON, performed a BFS traversal from the Start block and represented only the block names as text"
+          ],
+          "achieved": [
+            "Using gemini-2.5-flash-lite, response time dropped sharply from 60+ seconds to tens of seconds",
+            "Input tokens dropped to less than half",
+            "Accuracy remained on par with Phase 1"
+          ],
+          "limitation": [
+            "Worked reliably only for linear sequences (A→B→C), and hit limits on real-world sequences containing conditional branches, parallel flows, or loops",
+            "Since block parameter values themselves weren't in the prompt, parameter-change commands couldn't be handled",
+            "The contradiction that adding information to solve these limitations made the prompt long again"
+          ],
+          "conclusion": "Instead of always including all this data, let's load it into the prompt on demand, only when actually needed."
+        },
+        {
+          "label": "Phase 3",
+          "title": "Skill-Based Context Engineering — Load Only What's Needed, Only When It's Needed",
+          "approach": [
+            "Split the prompt into 7 Skill modules based on the task being performed (block creation, deletion, reordering, renaming, parameter changes, variable management, etc.)",
+            "A first-pass Judge AI (gemini-2.5-flash-lite) analyzes the user's command and produces a list of only the needed Skills among the 7",
+            "A second-pass Worker AI (gemini-2.5-flash) selectively loads only the rules and metadata of the classified Skills to modify the sequence",
+            "Example: for a rename command, only the rename Skill is loaded; for a parameter edit, only param_setting is loaded"
+          ],
+          "achieved": [
+            "Reached a production-ready average response time of 9.03 seconds (3–5s for simple tasks, 9–14s for complex tasks)",
+            "Average total tokens of 5,816 (ranging 1,944–8,954) — up to roughly a 6× reduction versus the single-prompt approach (for rename tasks)",
+            "In a 9-scenario benchmark, successfully handled even complex tasks such as reversing the order of 41 blocks and batch-editing parameters across 22 blocks"
+          ],
+          "limitation": [],
+          "conclusion": "By switching to a structure that selects and injects only the context needed for each task type, we were able to solve both the speed and cost problems simultaneously while maintaining accuracy."
+        }
+      ],
+      "phaseStats": [
+        {
+          "value": "9.03s",
+          "label": "Average response time (simple 3–5s · complex 9–14s)"
+        },
+        {
+          "value": "Up to 6×",
+          "label": "Token reduction (rename baseline, vs. single prompt)"
+        }
+      ],
+      "architecture": {
+        "intro": "The pipeline that converts natural language commands into sequence changes is structured as a two-stage Judge-Worker process.",
+        "steps": [
+          {
+            "n": 1,
+            "title": "User Input",
+            "desc": "Natural language command"
+          },
+          {
+            "n": 2,
+            "title": "Judge AI (flash-lite)",
+            "desc": "Classifies which of the 7 Skills are needed"
+          },
+          {
+            "n": 3,
+            "title": "Prompt Assembler",
+            "desc": "Builds the full prompt by injecting only the needed metadata"
+          },
+          {
+            "n": 4,
+            "title": "Main AI (flash)",
+            "desc": "Responds with only the changed portion (delta)"
+          },
+          {
+            "n": 5,
+            "title": "Post-processing",
+            "desc": "Build Full Sequence · Auto-Rewire · Smart Positioning · Pydantic validation, then deliver the full sequence to the frontend"
+          }
+        ],
+        "principles": [
+          "Remove unnecessary context from the prompt.",
+          "The LLM never regenerates everything — it returns only what changed.",
+          "Invalid output is blocked before it ever reaches the user."
+        ]
+      },
+      "frontend": {
+        "intro": "Starting from the question of how to present the sequence changed by the backend to the user, we designed a UI that lets users avoid simply accepting the AI's output as-is.",
+        "items": [
+          {
+            "title": "Show what changed",
+            "content": "We derive the execution flow order via BFS, compare a diff based on that order, and track blocks using an original_name field."
+          },
+          {
+            "title": "Instantly locate what changed",
+            "content": "The canvas and sidebar are linked bidirectionally, so clicking a changed item highlights and focuses the corresponding block."
+          },
+          {
+            "title": "AI results don't have to be accepted as-is",
+            "content": "We implemented Partial Revert/Edit so users can undo or modify just part of a change, and prevented invalid states with isolated-block warnings and real-time JSON Schema validation."
+          }
+        ],
+        "techNote": "React 18 · TypeScript · ReactFlow · Recoil · JSON Schema + Zod"
+      },
+      "security": {
+        "intro": "The backend and frontend communicate via API, but since anyone who knows the address could access it, we addressed security in three directions.",
+        "items": [
+          {
+            "title": "API Key Verification",
+            "content": "We require and validate an X-API-Key header on every API request, and built an admin page for issuing and managing API keys per client."
+          },
+          {
+            "title": "Network & Infrastructure Security",
+            "content": "CORS settings block resource access from disallowed domains, and rate limiting restricts excessive requests to prevent service overload and abuse."
+          },
+          {
+            "title": "Monitoring & Anomaly Detection",
+            "content": "We monitor token usage in real time, logging warnings and alerts when thresholds are exceeded, and also tag 429/403 errors with separate alerts so security issues can be caught immediately."
+          }
+        ]
+      },
+      "usage": {
+        "title": "Real Usage Example — Batch-Cleaning Up Confusing Block Names",
+        "command": "“There are too many blocks named 'done' and it's confusing. Please rename them appropriately.”",
+        "description": "In a 22-block sequence, the AI analyzed the connection flow of multiple blocks sharing the same name ('done') and batch-renamed them to context-appropriate names like 'x move done' and 'y return done.' It returned both the reasoning and the result of the change, and left parameters and connections other than the names untouched."
+      },
+      "stats": [
+        {
+          "value": "60s+ → 9.03s",
+          "label": "Average Response Time Improvement"
+        },
+        {
+          "value": "12,000+ → 5,816",
+          "label": "Average Total Token Reduction"
+        }
+      ],
+      "achievements": [
+        {
+          "title": "Skill-Based Context Engineering",
+          "content": "Designed a structure that loads only the context needed for each task type on demand, solving response-speed and cost issues simultaneously while maintaining accuracy."
+        },
+        {
+          "title": "Judge-Worker Two-Stage Architecture",
+          "content": "With a pipeline that separates classification (Judge) from execution (Worker), we reliably handled delta-based edits even for complex sequences."
+        },
+        {
+          "title": "Productizing Controllable AI",
+          "content": "With diff visualization, partial revert, API keys, rate limiting, and more, we equipped the product with both user control and security, completing it to a level usable in real industrial settings."
+        }
+      ]
+    }
+  ]
+}
