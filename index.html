@@ -17,9 +17,10 @@
             </p>
         </header>
 
-        <nav class="flex flex-col sm:flex-row justify-center space-y-3 sm:space-y-0 sm:space-x-4 mb-8">
+        <nav class="flex flex-col sm:flex-row justify-center flex-wrap gap-3 sm:gap-4 mb-8">
             <button id="tab-btn-1" data-tab="1" class="nav-tab active-tab">1. DB 구축 및 성능 평가</button>
             <button id="tab-btn-2" data-tab="2" class="nav-tab">2. 네트워크 프로그래밍</button>
+            <button id="tab-btn-3" data-tab="3" class="nav-tab">3. AiVot Block Sequence Agent</button>
         </nav>
 
         <main>
@@ -202,6 +203,193 @@
                         <ul class="list-disc list-inside ml-4 mt-1" id="project2-implementations"></ul>
                     </li>
                     <li><strong>[성과]</strong>: <span id="project2-achievement"></span></li>
+                </ul>
+            </section>
+
+            <section id="content-3" class="project-content hidden">
+                <h2 id="project3-title"></h2>
+                <h3 id="project3-subtitle"></h3>
+
+                <p class="text-sm text-slate-500 mb-4">
+                    <span class="font-medium">프로젝트 성격:</span> <span id="project3-period"></span>
+                </p>
+
+                <h4>사용 기술 스택</h4>
+                <div id="project3-techstack"></div>
+
+                <h4>배경 — 시퀀스 설계가 현장 생산성의 병목이 되다</h4>
+                <p class="text-slate-700 mb-4" id="p3-bg-intro"></p>
+                <ol class="project-section-list list-decimal list-inside text-slate-700 space-y-4">
+                    <li>
+                        <strong class="part-title" id="p3-problem1-title"></strong>
+                        <p class="mt-2" id="p3-problem1-content"></p>
+                    </li>
+                    <li>
+                        <strong class="part-title" id="p3-problem2-title"></strong>
+                        <p class="mt-2" id="p3-problem2-content"></p>
+                    </li>
+                    <li>
+                        <strong class="part-title" id="p3-problem3-title"></strong>
+                        <p class="mt-2" id="p3-problem3-content"></p>
+                    </li>
+                </ol>
+                <button id="toggle-p3-platform-img" class="toggle-btn mt-3">플랫폼 화면 보기</button>
+                <div id="p3-platform-img-container" class="image-container hidden">
+                    <div class="image-item">
+                        <h6 class="image-title">AiVot 블록 시퀀스 설계 화면</h6>
+                        <img src="images/p3_images/platform.png" alt="AiVot 블록 시퀀스 설계 화면" class="project-image">
+                    </div>
+                </div>
+
+                <h4>문제 해결 과정 — Phase 1 → 2 → 3</h4>
+                <ol class="project-section-list list-decimal list-inside text-slate-700 space-y-4">
+                    <li>
+                        <strong class="part-title" id="p3-phase1-title"></strong>
+                        <ul class="mt-2">
+                            <li><strong>무엇을 했나:</strong>
+                                <ul class="list-disc list-inside ml-4 mt-1" id="p3-phase1-approach"></ul>
+                            </li>
+                            <li><strong>달성한 것:</strong>
+                                <ul class="list-disc list-inside ml-4 mt-1" id="p3-phase1-achieved"></ul>
+                            </li>
+                            <li><strong>확인된 문제:</strong>
+                                <ul class="list-disc list-inside ml-4 mt-1" id="p3-phase1-limitation"></ul>
+                            </li>
+                            <li><strong>얻은 결론:</strong> <span id="p3-phase1-conclusion"></span></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <strong class="part-title" id="p3-phase2-title"></strong>
+                        <ul class="mt-2">
+                            <li><strong>무엇을 했나:</strong>
+                                <ul class="list-disc list-inside ml-4 mt-1" id="p3-phase2-approach"></ul>
+                            </li>
+                            <li><strong>달성한 것:</strong>
+                                <ul class="list-disc list-inside ml-4 mt-1" id="p3-phase2-achieved"></ul>
+                            </li>
+                            <li><strong>새롭게 발견된 한계:</strong>
+                                <ul class="list-disc list-inside ml-4 mt-1" id="p3-phase2-limitation"></ul>
+                            </li>
+                            <li><strong>얻은 결론:</strong> <span id="p3-phase2-conclusion"></span></li>
+                        </ul>
+                        <button id="toggle-p3-schema-img" class="toggle-btn mt-3">방대한 블록·파라미터 데이터 보기</button>
+                        <div id="p3-schema-img-container" class="image-container hidden">
+                            <div class="image-grid">
+                                <div class="image-item">
+                                    <h6 class="image-title">블록 스키마 (BlockList)</h6>
+                                    <img src="images/p3_images/block_schema.png" alt="블록 스키마" class="project-image">
+                                </div>
+                                <div class="image-item">
+                                    <h6 class="image-title">파라미터 사전 (ParameterDict)</h6>
+                                    <img src="images/p3_images/param_dict.png" alt="파라미터 사전" class="project-image">
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <strong class="part-title" id="p3-phase3-title"></strong>
+                        <ul class="mt-2">
+                            <li><strong>무엇을 했나:</strong>
+                                <ul class="list-disc list-inside ml-4 mt-1" id="p3-phase3-approach"></ul>
+                            </li>
+                            <li><strong>달성한 것:</strong>
+                                <ul class="list-disc list-inside ml-4 mt-1" id="p3-phase3-achieved"></ul>
+                            </li>
+                            <li><strong>얻은 결론:</strong> <span id="p3-phase3-conclusion"></span></li>
+                        </ul>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+                            <div class="stat-card">
+                                <div class="stat-value" id="p3-phasestat1-value"></div>
+                                <div class="stat-label" id="p3-phasestat1-label"></div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-value" id="p3-phasestat2-value"></div>
+                                <div class="stat-label" id="p3-phasestat2-label"></div>
+                            </div>
+                        </div>
+                    </li>
+                </ol>
+
+                <h4>아키텍처 — Judge-Worker 2단계 파이프라인</h4>
+                <p class="text-slate-700 mb-3" id="p3-arch-intro"></p>
+                <ol class="list-decimal list-inside text-slate-700 space-y-2 mb-4" id="p3-arch-steps"></ol>
+                <p class="font-medium text-slate-800 mb-1">핵심 설계 원칙</p>
+                <ul class="list-disc list-inside ml-4 text-slate-700 mb-4" id="p3-arch-principles"></ul>
+
+                <h4>프론트엔드 — 사용자 제어권 보장</h4>
+                <p class="text-slate-700 mb-3" id="p3-frontend-intro"></p>
+                <ul class="list-disc list-inside ml-4 text-slate-700 space-y-2 mb-3">
+                    <li><strong id="p3-frontend1-title"></strong>: <span id="p3-frontend1-content"></span></li>
+                    <li><strong id="p3-frontend2-title"></strong>: <span id="p3-frontend2-content"></span></li>
+                    <li><strong id="p3-frontend3-title"></strong>: <span id="p3-frontend3-content"></span></li>
+                </ul>
+                <p class="text-sm text-slate-500 mb-3">기술 스택: <span id="p3-frontend-technote"></span></p>
+                <button id="toggle-p3-frontend-img" class="toggle-btn mt-3">Diff 비교 화면 보기</button>
+                <div id="p3-frontend-img-container" class="image-container hidden">
+                    <div class="image-grid">
+                        <div class="image-item">
+                            <h6 class="image-title">시퀀스 변경사항 비교 모달</h6>
+                            <img src="images/p3_images/diff_modal.png" alt="시퀀스 변경사항 비교 모달" class="project-image">
+                        </div>
+                        <div class="image-item">
+                            <h6 class="image-title">변경점 색상 표시 / 사이드바 연동</h6>
+                            <img src="images/p3_images/diff_ui.png" alt="변경점 색상 표시" class="project-image">
+                        </div>
+                    </div>
+                </div>
+
+                <h4>보안 처리</h4>
+                <p class="text-slate-700 mb-3" id="p3-security-intro"></p>
+                <ul class="list-disc list-inside ml-4 text-slate-700 space-y-2 mb-3">
+                    <li><strong id="p3-security1-title"></strong>: <span id="p3-security1-content"></span></li>
+                    <li><strong id="p3-security2-title"></strong>: <span id="p3-security2-content"></span></li>
+                    <li><strong id="p3-security3-title"></strong>: <span id="p3-security3-content"></span></li>
+                </ul>
+                <button id="toggle-p3-security-img" class="toggle-btn mt-3">API Key 관리 화면 보기</button>
+                <div id="p3-security-img-container" class="image-container hidden">
+                    <div class="image-item">
+                        <h6 class="image-title">고객사별 API Key 관리 페이지</h6>
+                        <img src="images/p3_images/security_admin.png" alt="고객사별 API Key 관리 페이지" class="project-image">
+                    </div>
+                </div>
+
+                <h4>실제 사용 예시</h4>
+                <ol class="project-section-list list-decimal list-inside text-slate-700 space-y-4">
+                    <li>
+                        <strong class="part-title" id="p3-usage-title"></strong>
+                        <p class="mt-2 italic" id="p3-usage-command"></p>
+                        <p class="mt-2" id="p3-usage-description"></p>
+                        <button id="toggle-p3-usage-img" class="toggle-btn mt-3">실행 화면 보기</button>
+                        <div id="p3-usage-img-container" class="image-container hidden">
+                            <div class="image-grid">
+                                <div class="image-item">
+                                    <h6 class="image-title">자연어 명령 입력</h6>
+                                    <img src="images/p3_images/usage_prompt.png" alt="자연어 명령 입력" class="project-image">
+                                </div>
+                                <div class="image-item">
+                                    <h6 class="image-title">변경사항 비교 결과</h6>
+                                    <img src="images/p3_images/usage_result.png" alt="변경사항 비교 결과" class="project-image">
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </ol>
+
+                <h4>프로젝트 핵심 요약</h4>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 my-6">
+                    <div class="stat-card">
+                        <div class="stat-value" id="p3-stat1-value"></div>
+                        <div class="stat-label" id="p3-stat1-label"></div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="p3-stat2-value"></div>
+                        <div class="stat-label" id="p3-stat2-label"></div>
+                    </div>
+                </div>
+                <ul>
+                    <li><strong id="p3-achievement1-title"></strong>: <span id="p3-achievement1-content"></span></li>
+                    <li><strong id="p3-achievement2-title"></strong>: <span id="p3-achievement2-content"></span></li>
+                    <li><strong id="p3-achievement3-title"></strong>: <span id="p3-achievement3-content"></span></li>
                 </ul>
             </section>
         </main>
